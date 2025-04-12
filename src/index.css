@@ -1,0 +1,30 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import "tailwindcss";
+@theme {
+	--color-primary: #e06152;
+	--color-secondary: #6ba0a6;
+	--color-background: #efe7e1;
+	--color-lightPrimary: #ffb8af;
+	--color-gray: #717171;
+	--default-font-family: "Montserrat";
+
+	--animate-fadein: fadein 0.4s ease-out 1;
+	@keyframes fadein {
+		0% {
+			transform: translateY(60px);
+			opacity: 0;
+		}
+		100% {
+			transform: translateY(0px);
+			opacity: 1;
+		}
+	}
+}
+
+html,
+body,
+#root {
+	width: 100%;
+	height: 100%;
+	background-color: #efe7e1;
+}
