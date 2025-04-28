@@ -1,25 +1,15 @@
-import { Button } from "./shared/button";
-import { Input } from "./shared/input";
-import Tabs from "./widgets/tabs";
+import { Outlet } from "react-router";
+import Navbar from "./widgets/navbar";
 
 function App() {
 	return (
-		<>
-			<Input placeholder="Пароль" />
-			<Button>Кнопка</Button>
-			<Tabs
-				elements={[
-					{
-						title: "test",
-						element: <div>fvd</div>,
-					},
-					{
-						title: "test",
-						element: <div>fvd</div>,
-					},
-				]}
-			/>
-		</>
+		<div className=" flex flex-col">
+			<Navbar />
+
+			<div className=" px-40 w-full pt-20 h-full">
+				<Outlet />
+			</div>
+		</div>
 	);
 }
 

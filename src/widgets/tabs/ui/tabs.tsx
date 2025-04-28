@@ -3,19 +3,54 @@ import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "motion/react";
 import { type ReactNode, useState } from "react";
 
+// Тут типы не очень хорошо сделаны, надо бы переписать потом будет
+
 interface TabElement {
-	element: ReactNode;
+	element?: ReactNode;
 	title: string;
 }
 
-interface TabsProps {
+interface TabsPropsBase {
 	elements: Array<TabElement>;
 	className?: string;
 }
-function Tabs({ elements }: TabsProps) {
+
+// Варианты пропсов через объединение типов
+type TabsProps = TabsPropsBase &
+	(
+		| {
+				// Режим с контентом (по умолчанию)
+				isSwitchOnly?: false; // явно false
+				selectedIndex?: never; // запрещаем эти пропсы
+				onTabChange?: never;
+		  }
+		| {
+				// Режим переключателя
+				isSwitchOnly: true;
+				selectedIndex: number;
+				onTabChange: (index: number) => void;
+		  }
+	);
+
+function Tabs({
+	elements,
+	className,
+	isSwitchOnly = false,
+	selectedIndex = 0,
+	onTabChange,
+}: TabsProps) {
 	// const { selectedInd, setSelected } = useTabsModel();
 
-	const [selectedInd, setSelected] = useState<number>(0);
+	const [internalSelected, setInternalSelected] = useState(0);
+	const selectedInd = isSwitchOnly ? selectedIndex : internalSelected;
+
+	const handleChange = (index: number) => {
+		if (isSwitchOnly) {
+			onTabChange?.(index);
+		} else {
+			setInternalSelected(index);
+		}
+	};
 
 	return (
 		<>
@@ -24,7 +59,7 @@ function Tabs({ elements }: TabsProps) {
 					<div className="flex items-center gap-2" key={`tab-${elem.title}`}>
 						<button
 							type="button"
-							onClick={() => setSelected(ind)}
+							onClick={() => handleChange(ind)}
 							className={cn(
 								" text-gray",
 								ind === selectedInd && "text-primary",
@@ -36,17 +71,19 @@ function Tabs({ elements }: TabsProps) {
 					</div>
 				))}
 			</div>
-			<AnimatePresence mode="wait">
-				<motion.div
-					initial={{ opacity: 0, y: 10 }}
-					animate={{ opacity: 1, y: 0 }}
-					exit={{ opacity: 0, y: -10 }}
-					transition={{ duration: 0.2 }}
-					key={`tab-content-${selectedInd}`}
-				>
-					{elements[selectedInd].element}
-				</motion.div>
-			</AnimatePresence>
+			{!isSwitchOnly && (
+				<AnimatePresence mode="wait">
+					<motion.div
+						initial={{ opacity: 0, y: 10 }}
+						animate={{ opacity: 1, y: 0 }}
+						exit={{ opacity: 0, y: -10 }}
+						transition={{ duration: 0.2 }}
+						key={`tab-content-${selectedInd}`}
+					>
+						{elements[selectedInd].element}
+					</motion.div>
+				</AnimatePresence>
+			)}
 		</>
 	);
 }

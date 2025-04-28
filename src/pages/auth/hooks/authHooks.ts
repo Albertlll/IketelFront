@@ -1,3 +1,4 @@
+import { useUserStore } from "@/entities/user/model/store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
@@ -42,15 +43,25 @@ export function useLoginForm() {
 		resolver: zodResolver(loginSchema),
 	});
 
+	const { setUser } = useUserStore();
+
 	const onSubmit = async (data: LoginFormData) => {
 		console.log("sssc");
 		try {
 			console.log("cdcsd");
 
-			await loginRequest({
+			const tokenData = await loginRequest({
 				password: data.password,
 				email: data.email,
 			});
+
+			setUser({
+				token: tokenData.access_token,
+				email: tokenData.email,
+				username: tokenData.username,
+			});
+
+			localStorage.setItem("token", tokenData.access_token);
 		} catch (error) {
 			console.log("error");
 

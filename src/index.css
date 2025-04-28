@@ -6,6 +6,7 @@
 	--color-background: #efe7e1;
 	--color-lightPrimary: #ffb8af;
 	--color-gray: #717171;
+	--color-surface: #efe7e1;
 	--default-font-family: "Montserrat";
 
 	--animate-fadein: fadein 0.4s ease-out 1;
@@ -19,6 +20,10 @@
 			opacity: 1;
 		}
 	}
+}
+
+.shadowDefault {
+	box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.05);
 }
 
 html,

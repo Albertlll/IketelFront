@@ -1,9 +1,9 @@
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import { BrowserRouter, RouterProvider } from "react-router";
-import App from "./App.tsx";
+import { RouterProvider } from "react-router";
 import { router } from "./routes.tsx";
 
+// biome-ignore lint/style/noNonNullAssertion: <explanation>
 createRoot(document.getElementById("root")!).render(
 	<RouterProvider router={router} />,
 );
