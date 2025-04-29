@@ -1,21 +1,30 @@
 import { useNavbarStore } from "@/widgets/navbar/model/navbarState";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router";
+import { useEditorStore } from "../model/world-editor-store";
 import CreateWorldHeader from "./CreateWorldHeader";
 import SentencesEditor from "./SentencesEditor";
 import WordsEditor from "./WordsEditor";
 
-function WorldsEditor() {
+function WorldsEditor({ mode }: { mode: "read" | "create" }) {
 	const { selectedIndex, setSelectedIndex } = useNavbarStore();
+
+	const { id } = useParams<{ id: string }>();
 
 	const [isWordsPage, setIsWordsPage] = useState<boolean>(true);
 
+	const { loadWorldData } = useEditorStore();
+
 	useEffect(() => {
+		console.log(id);
 		setSelectedIndex(0);
-	}, [setSelectedIndex]);
+		if (mode === "read") loadWorldData(Number(id));
+	}, [setSelectedIndex, id, loadWorldData, mode]);
 
 	return (
-		<div className=" box-border w-full shadowDefault ">
+		// shadowDefault
+		<div className=" box-border w-full ">
 			<CreateWorldHeader
 				isWordsPage={isWordsPage}
 				setIsWordsPage={setIsWordsPage}

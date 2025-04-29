@@ -1,4 +1,6 @@
+import { worldDataRequest } from "@/entities/world";
 import type { WordType } from "@/entities/world/types/types";
+import { data } from "react-router";
 import { create } from "zustand";
 
 interface EditorStore {
@@ -7,6 +9,7 @@ interface EditorStore {
 	removeWord: (id: string) => void;
 	updateWord: (id: string, data: Partial<WordType>) => void;
 	clearWords: () => void;
+	loadWorldData: (worldId: number) => void;
 }
 
 export const useEditorStore = create<EditorStore>((set) => ({
@@ -38,4 +41,10 @@ export const useEditorStore = create<EditorStore>((set) => ({
 		})),
 
 	clearWords: () => set({ words: [] }),
+
+	loadWorldData: (worldId: number) => {
+		worldDataRequest(worldId).then((data) => {
+			set({ words: data.words });
+		});
+	},
 }));

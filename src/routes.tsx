@@ -20,7 +20,8 @@ export const router = createBrowserRouter([
 			},
 			{
 				path: "/worlds/:id",
-				element: <WorldsEditor mode="edit" />,
+				element: <WorldsEditor mode="read" />,
+				// loader: ({ params }) => ({ id: params.id }),
 			},
 			{
 				path: "/worlds/new",
