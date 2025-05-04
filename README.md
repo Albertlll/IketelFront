@@ -1,54 +1,49 @@
-# React + TypeScript + Vite
+# Проект IKETEL
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Обзор
 
-Currently, two official plugins are available:
+IKETEL — это веб-приложение для обучения татарскому языку, созданное с использованием React, TypeScript и Vite. Оно следует методологии Feature-Sliced Design (FSD) для организации кодовой базы. Приложение создано для упрощения жизни учителям, позволяя им легко создавать образовательные игры.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Функции
 
-## Expanding the ESLint configuration
+- **Аутентификация пользователей**: Позволяет пользователям регистрироваться, входить в систему и управлять своими профилями.
+- **Создание миров**: Пользователи могут создавать и редактировать миры, добавляя слова и предложения. Мир — это база данных с словами и предложениями на одну тему.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Структура проекта
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+Проект следует методологии Feature-Sliced Design (FSD), которая организует кодовую базу в следующие слои:
+
+- **app**: Содержит основную настройку приложения и маршрутизацию.
+- **entities**: Содержит бизнес-сущности, такие как пользователь и мир.
+- **features**: Содержит функции, такие как аутентификация и создание мира.
+- **shared**: Содержит повторно используемые UI-компоненты и утилиты.
+- **widgets**: Содержит сложные UI-компоненты, которые объединяют несколько функций и сущностей.
+
+## Установка
+
+### Предварительные требования
+
+- Node.js (версия 14 или выше)
+- npm (версия 6 или выше)
+
+### Установка
+
+1. Клонируйте репозиторий:
+   ```bash
+   git clone https://github.com/your-repo/iketel.git
+   cd iketel
+   ```
+
+2. Установите зависимости:
+   ```bash
+   npm install
+   ```
+
+### Запуск приложения
+
+Чтобы запустить сервер разработки, выполните:
+```bash
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+Приложение будет доступно по адресу `http://localhost:3000`.

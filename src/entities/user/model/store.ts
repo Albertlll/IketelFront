@@ -1,3 +1,4 @@
+import httpClient from "@/httpClient";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -35,22 +36,11 @@ export const useUserStore = create<UserStore>()(
 				if (!token) return false;
 				return true;
 			},
-
 			validateToken: async () => {
-				const token = get().token;
-				if (!token) return false;
-
 				try {
-					const response = await fetch("http://localhost:8000/auth/validate", {
-						headers: {
-							Authorization: `Bearer ${token}`,
-						},
-					});
-
-					if (!response.ok) throw new Error("Invalid token");
+					await httpClient.get("/auth/validate");
 					return true;
-				} catch (error) {
-					// Если ошибка (сервер сдох или токен невалидный) — чистим стор
+				} catch {
 					get().clearUser();
 					return false;
 				}

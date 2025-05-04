@@ -4,14 +4,14 @@ import { useEffect, useState } from "react";
 
 function AddNewWordRow({
 	num,
-	type,
 	word: initialWord,
 	translation: initialTranslation,
 	onDelete,
 	onChange,
+	readonly = false,
 }: {
+	readonly?: boolean;
 	num: number;
-	type: "sentence" | "word";
 	onDelete: () => void;
 	onChange: (data: Partial<WordType>) => void;
 } & WordType) {
@@ -19,11 +19,12 @@ function AddNewWordRow({
 	const [translation, setTranslation] = useState(initialTranslation);
 
 	// Проверяем на пустые поля и удаляем при необходимости
-	useEffect(() => {
+	const handleBlur = () => {
+		// Проверяем на пустые поля и удаляем при уходе фокуса
 		if (word === "" && translation === "") {
 			onDelete();
 		}
-	}, [word, translation, onDelete]);
+	};
 
 	const handleChange = (field: keyof WordType, value: string) => {
 		const newData = { [field]: value };
@@ -37,22 +38,20 @@ function AddNewWordRow({
 		<div className="bg-white h-fit flex justify-between rounded-[20px] px-[50px] py-[23px] items-center">
 			<div className="font-bold text-3xl">{num}</div>
 			<div className="flex gap-3">
-				{type === "word" ? (
-					<>
-						<Input
-							placeholder="Сүз..."
-							value={word}
-							onChange={(e) => handleChange("word", e.target.value)}
-						/>
-						<Input
-							placeholder="Слово..."
-							value={translation}
-							onChange={(e) => handleChange("translation", e.target.value)}
-						/>
-					</>
-				) : (
-					<Input placeholder="Предложение..." />
-				)}
+				<Input
+					disabled={readonly}
+					placeholder="Сүз..."
+					value={word}
+					onChange={(e) => handleChange("word", e.target.value)}
+					onBlur={handleBlur}
+				/>
+				<Input
+					disabled={readonly}
+					placeholder="Слово..."
+					value={translation}
+					onChange={(e) => handleChange("translation", e.target.value)}
+					onBlur={handleBlur}
+				/>
 			</div>
 		</div>
 	);

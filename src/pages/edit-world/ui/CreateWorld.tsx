@@ -1,7 +1,9 @@
+import { startAdventure } from "@/entities/adventure/api/adventure-api";
 import { useNavbarStore } from "@/widgets/navbar/model/navbarState";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { useNavigate } from "react-router";
 import { useEditorStore } from "../model/world-editor-store";
 import CreateWorldHeader from "./CreateWorldHeader";
 import SentencesEditor from "./SentencesEditor";
@@ -14,13 +16,33 @@ function WorldsEditor({ mode }: { mode: "read" | "create" }) {
 
 	const [isWordsPage, setIsWordsPage] = useState<boolean>(true);
 
-	const { loadWorldData } = useEditorStore();
+	const { loadWorldData, setEditorType, clearAll, setWorldId } =
+		useEditorStore();
 
 	useEffect(() => {
 		console.log(id);
-		setSelectedIndex(0);
-		if (mode === "read") loadWorldData(Number(id));
-	}, [setSelectedIndex, id, loadWorldData, mode]);
+		setWorldId(Number(id));
+
+		console.log(mode);
+		setEditorType(mode);
+		if (mode === "read") {
+			loadWorldData(Number(id));
+			setSelectedIndex(1);
+		} else {
+			clearAll();
+			setSelectedIndex(0);
+		}
+
+		return () => clearAll();
+	}, [
+		setSelectedIndex,
+		id,
+		loadWorldData,
+		mode,
+		setEditorType,
+		clearAll,
+		setWorldId,
+	]);
 
 	return (
 		// shadowDefault
@@ -30,17 +52,7 @@ function WorldsEditor({ mode }: { mode: "read" | "create" }) {
 				setIsWordsPage={setIsWordsPage}
 			/>
 
-			<AnimatePresence mode="wait">
-				<motion.div
-					key={isWordsPage ? "words" : "sentences"}
-					initial={{ opacity: 0, y: 10 }}
-					animate={{ opacity: 1, y: 0 }}
-					exit={{ opacity: 0, y: -10 }}
-					transition={{ duration: 0.2 }}
-				>
-					{isWordsPage ? <WordsEditor /> : <SentencesEditor />}
-				</motion.div>
-			</AnimatePresence>
+			{isWordsPage ? <WordsEditor /> : <SentencesEditor />}
 		</div>
 	);
 }

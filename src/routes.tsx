@@ -3,9 +3,8 @@ import { createBrowserRouter, redirect } from "react-router";
 import App from "./App";
 import { useUserStore } from "./entities/user/model/store";
 import Auth from "./pages/auth";
-import EditWorlds from "./pages/edit-world";
-import CreateWorld from "./pages/edit-world/ui/CreateWorld";
-import WorldsEditor from "./pages/edit-world/ui/CreateWorld";
+import WorldsEditor from "./pages/edit-world";
+import { Game } from "./pages/game";
 import Library from "./pages/library";
 import Profile from "./pages/profile";
 
@@ -26,6 +25,12 @@ export const router = createBrowserRouter([
 			{
 				path: "/worlds/new",
 				element: <WorldsEditor mode="create" />,
+				loader: () => {
+					// Проверяем авторизацию напрямую из хранилища
+					const token = useUserStore.getState().token;
+					if (!token) return redirect("/auth");
+					return null;
+				},
 			},
 			{
 				path: "/my-worlds",
@@ -36,6 +41,10 @@ export const router = createBrowserRouter([
 					if (!token) return redirect("/auth");
 					return null;
 				},
+			},
+			{
+				path: "/game",
+				element: <Game />,
 			},
 			{
 				index: true,
