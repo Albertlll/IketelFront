@@ -20,14 +20,10 @@ RUN --mount=type=secret,id=ssl_key cat /run/secrets/ssl_key > /app/ssl/server-ke
 RUN --mount=type=secret,id=ssl_cert cat /run/secrets/ssl_cert > /app/ssl/server-cert.crt
 RUN --mount=type=secret,id=ssl_ca cat /run/secrets/ssl_ca > /app/ssl/server-ca.crt
 
-# Устанавливаем порты
-EXPOSE 4173
 
-# Сборка фронтенда
-RUN npm run build
+# Явно указываем порт для Vite preview
+ENV PORT=3000
+EXPOSE 3000
 
-# Устанавливаем переменную окружения для порта
-ENV PORT=4173
-
-# Команда для запуска приложения
-CMD ["npm", "run", "start", "--", "--port", "3000"]
+# Запуск Vite preview с правильными параметрами
+CMD ["npm", "run", "preview", "--", "--host", "0.0.0.0", "--port", "3000"]
