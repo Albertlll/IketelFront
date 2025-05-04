@@ -1,0 +1,33 @@
+# Используем официальный Node.js образ
+FROM node:23-alpine
+
+# Устанавливаем рабочую директорию
+WORKDIR /app
+
+# Создаем директорию для SSL сертификатов
+RUN mkdir -p /app/ssl
+
+# Копируем package.json и устанавливаем зависимости
+COPY package*.json ./
+RUN npm install
+
+# Копируем исходный код
+COPY . .
+
+# Копируем сертификаты (если передаются через секреты)
+
+RUN --mount=type=secret,id=ssl_key cat /run/secrets/ssl_key > /app/ssl/server-key.key
+RUN --mount=type=secret,id=ssl_cert cat /run/secrets/ssl_cert > /app/ssl/server-cert.crt
+RUN --mount=type=secret,id=ssl_ca cat /run/secrets/ssl_ca > /app/ssl/server-ca.crt
+
+# Устанавливаем порты
+EXPOSE 4173
+
+# Сборка фронтенда
+RUN npm run build
+
+# Устанавливаем переменную окружения для порта
+ENV PORT=4173
+
+# Команда для запуска приложения
+CMD ["npm", "run", "start", "--", "--port", "3000"]
