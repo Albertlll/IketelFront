@@ -11,6 +11,8 @@ export default defineConfig({
 		},
 	},
 	server: {
-		port: 3000,
+		host: "0.0.0.0", // Прослушивание на всех интерфейсах
+		port: 3000, // Указание порта
+		allowedHosts: ["iketel.ru"],
 	},
 });
