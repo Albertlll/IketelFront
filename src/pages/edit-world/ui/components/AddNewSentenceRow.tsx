@@ -1,6 +1,6 @@
-import type { SentenceType, WordType } from "@/entities/world/types/types";
+import type { SentenceType } from "@/entities/world/types/types";
 import { Input } from "@/shared/input";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 function AddNewSentenceRow({
 	num,

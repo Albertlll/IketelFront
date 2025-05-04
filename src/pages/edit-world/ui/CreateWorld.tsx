@@ -1,16 +1,13 @@
-import { startAdventure } from "@/entities/adventure/api/adventure-api";
 import { useNavbarStore } from "@/widgets/navbar/model/navbarState";
-import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { useNavigate } from "react-router";
 import { useEditorStore } from "../model/world-editor-store";
 import CreateWorldHeader from "./CreateWorldHeader";
 import SentencesEditor from "./SentencesEditor";
 import WordsEditor from "./WordsEditor";
 
 function WorldsEditor({ mode }: { mode: "read" | "create" }) {
-	const { selectedIndex, setSelectedIndex } = useNavbarStore();
+	const { setSelectedIndex } = useNavbarStore();
 
 	const { id } = useParams<{ id: string }>();
 

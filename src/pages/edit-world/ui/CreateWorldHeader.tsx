@@ -1,6 +1,5 @@
 import { Input } from "@/shared/input";
 import Tabs from "@/widgets/tabs";
-import { useState } from "react";
 import { useNavigate } from "react-router";
 import { useEditorStore } from "../model/world-editor-store";
 import ControlBtns from "./components/ControlBtns";
@@ -9,7 +8,7 @@ function CreateWorldHeader({
 	isWordsPage,
 	setIsWordsPage,
 }: { isWordsPage: boolean; setIsWordsPage: (index: boolean) => void }) {
-	const { worldTitle, editorType, setWorldTitle, sendWorldData, worldId } =
+	const { worldTitle, editorType, setWorldTitle, sendWorldData } =
 		useEditorStore();
 
 	const publish = () => {};

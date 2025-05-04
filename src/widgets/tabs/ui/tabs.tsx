@@ -34,7 +34,6 @@ type TabsProps = TabsPropsBase &
 
 function Tabs({
 	elements,
-	className,
 	isSwitchOnly = false,
 	selectedIndex = 0,
 	onTabChange,

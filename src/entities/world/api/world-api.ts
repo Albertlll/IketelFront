@@ -1,4 +1,4 @@
-import type { SentenceType, WorldType } from "@/entities/world/types/types";
+import type { WorldType } from "@/entities/world/types/types";
 import httpClient from "@/httpClient";
 
 export const worldDataRequest = async (worldId: number): Promise<WorldType> => {

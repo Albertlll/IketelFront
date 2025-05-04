@@ -1,6 +1,6 @@
 import type { WordType } from "@/entities/world/types/types";
 import { Input } from "@/shared/input";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 function AddNewWordRow({
 	num,

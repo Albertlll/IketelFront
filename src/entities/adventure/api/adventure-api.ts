@@ -1,6 +1,4 @@
-import { useUserStore } from "@/entities/user/model/store";
 import httpClient from "@/httpClient";
-import socket from "@/sockets";
 
 export const startAdventure = async (worldId: number) => {
 	console.log(worldId);
