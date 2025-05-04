@@ -1,33 +1,65 @@
-# Используем официальный Node.js образ
-FROM node:23-alpine
+name: Deploy
 
-# Устанавливаем рабочую директорию
-WORKDIR /app
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
-# Создаем директорию для SSL сертификатов
-RUN mkdir -p /app/ssl
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-# Копируем package.json и устанавливаем зависимости
-COPY package*.json ./
-RUN npm install
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-# Копируем исходный код
-COPY . .
+      # Шаг 1: Логинимся в Yandex Container Registry
+      - name: Log in to Yandex Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: cr.yandex
+          username: oauth
+          password: ${{ secrets.YANDEX_CLOUD_KEY }}
+      
+      - name: Create secret files
+        run: |
+          echo "${{ secrets.SSL_CERT_KEY }}" > ssl_key.pem
+          echo "${{ secrets.SSL_CERT }}" > ssl_cert.pem
+          echo "${{ secrets.SSL_CERT_CA }}" > ssl_ca.pem
 
-# Копируем сертификаты (если передаются через секреты)
+      # Шаг 2: Строим Docker образ
+      - name: Build Docker image
+        run: |
+          docker build --secret id=ssl_key,src=ssl_key.pem \
+                       --secret id=ssl_cert,src=ssl_cert.pem \
+                       --secret id=ssl_ca,src=ssl_ca.pem \
+                       -t cr.yandex/crph8la4elkq8clar20b/iketel-frontend:latest .
 
-RUN --mount=type=secret,id=ssl_key cat /run/secrets/ssl_key > /app/ssl/server-key.key
-RUN --mount=type=secret,id=ssl_cert cat /run/secrets/ssl_cert > /app/ssl/server-cert.crt
-RUN --mount=type=secret,id=ssl_ca cat /run/secrets/ssl_ca > /app/ssl/server-ca.crt
+      # Шаг 3: Публикуем Docker образ в Yandex Container Registry
+      - name: Push Docker image to Yandex Container Registry
+        run: |
+          docker push cr.yandex/crph8la4elkq8clar20b/iketel-frontend:latest
 
-# Устанавливаем порты
-EXPOSE 4173
+      # Шаг 5: SSH в сервер и запускаем контейнеры
+      - name: Create SSH key file
+        run: |
+          echo "${{ secrets.SERVER_SSH_KEY }}" > server_key.pem
+          chmod 600 server_key.pem
+      
+      - name: SSH into server and deploy
+        run: |
+          ssh -o StrictHostKeyChecking=no -i server_key.pem alan@${{ secrets.SERVER_IP }} "cd /home/alan && \
+            docker-compose pull && \
+            docker-compose down && \
+            docker-compose up -d && \
+            docker system prune -f"
 
-# Сборка фронтенда
-RUN npm run build
 
-# Устанавливаем переменную окружения для порта
-ENV PORT=4173
 
-# Команда для запуска приложения
-CMD ["npm", "run", "start", "--", "--port", "3000"]
+
+
+
+
