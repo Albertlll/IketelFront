@@ -8,6 +8,7 @@ const socket = io(SOCKET_URL, {
 	path: "/sio",
 	autoConnect: false,
 	withCredentials: true,
+	transports: ["websocket"],
 });
 
 socket.on("connect_error", (err) => {

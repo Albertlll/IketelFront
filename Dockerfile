@@ -26,4 +26,4 @@ ENV PORT=3000
 EXPOSE 3000
 
 # Запуск Vite preview с правильными параметрами
-CMD ["npm", "run", "preview", "--", "--host", "0.0.0.0", "--port", "3000"]
+CMD ["npm", "run", "build", "&&" "npm", "run", "preview", "--", "--host", "0.0.0.0", "--port", "3000"]
