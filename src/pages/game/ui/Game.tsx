@@ -13,7 +13,7 @@ const Game: React.FC = () => {
 	useEffect(() => {
 		loadAdventure(worldId);
 
-		socket.on("player_joined", (player) => {
+		socket.on("new_student_joined", (player) => {
 			console.log("New player:", player);
 		});
 
