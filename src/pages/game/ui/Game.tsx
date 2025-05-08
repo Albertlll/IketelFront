@@ -1,7 +1,5 @@
 import useAdventureStore from "@/entities/adventure/model/adventureStore";
-import useParticipantsStore, {
-	type Participant,
-} from "@/features/participants/model/participantsStore";
+import type { Participant } from "@/features/participants/model/participantsStore";
 import ParticipantsList from "@/features/participants/ui/ParticipantsList";
 import { useEditorStore } from "@/pages/edit-world/model/world-editor-store";
 import socket from "@/sockets";
