@@ -8,8 +8,13 @@ function CreateWorldHeader({
 	isWordsPage,
 	setIsWordsPage,
 }: { isWordsPage: boolean; setIsWordsPage: (index: boolean) => void }) {
-	const { worldTitle, editorType, setWorldTitle, sendWorldData } =
-		useEditorStore();
+	const {
+		worldTitle,
+		editorType,
+		setWorldTitle,
+		sendWorldData,
+		setWorldImage,
+	} = useEditorStore();
 
 	const publish = () => {};
 	const download = () => {};
@@ -27,15 +32,24 @@ function CreateWorldHeader({
 	publish;
 	return (
 		<div className=" flex gap-4 flex-col">
-			<Input
-				onChange={(e) => {
-					setWorldTitle(e.target.value);
-				}}
-				placeholder="Название мирка"
-				disabled={editorType === "read"}
-				value={worldTitle}
-				className="w-80"
-			/>
+			<div className=" w-full flex justify-between">
+				<Input
+					onChange={(e) => {
+						setWorldTitle(e.target.value);
+					}}
+					placeholder="Название мирка"
+					disabled={editorType === "read"}
+					value={worldTitle}
+					className="w-80"
+				/>
+
+				<Input
+					type="file"
+					onImageLoad={(base64) => setWorldImage(base64)}
+					className="w-80"
+				/>
+			</div>
+
 			<div className=" bg-white h-fit flex justify-between rounded-[20px] px-[17px] py-[23px]">
 				<Tabs
 					isSwitchOnly={true}

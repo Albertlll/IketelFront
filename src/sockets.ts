@@ -1,41 +1,40 @@
-// src/shared/api/socket.ts
 import { io } from "socket.io-client";
 import { useUserStore } from "./entities/user/model/store";
 
-const SOCKET_URL = "http://localhost:8000/";
+const SOCKET_URL = "https://iketel.ru/api";
 
 // Создаем инстанс
 const socket = io(SOCKET_URL, {
-  path: "/sio",
-  autoConnect: false,
-  withCredentials: true,
+	path: "/sio",
+	autoConnect: false,
+	withCredentials: true,
 });
 
 socket.on("connect_error", (err) => {
-  if (err.message === "Unauthorized") {
-    useUserStore.getState().clearUser();
-    window.location.href = "/login";
-  }
+	if (err.message === "Unauthorized") {
+		useUserStore.getState().clearUser();
+		window.location.href = "/login";
+	}
 });
 
 // Функция для безопасного подключения с токеном
 export const connectSocket = () => {
-  const token = useUserStore.getState().token;
+	const token = useUserStore.getState().token;
 
-  if (token) {
-    socket.auth = { token }; // Передаем токен в auth
-    socket.connect(); // Подключаемся
+	if (token) {
+		socket.auth = { token }; // Передаем токен в auth
+		socket.connect(); // Подключаемся
 
-    // Логируем события для отладки
-    socket.on("connect", () => {
-      console.log("✅ Connected! Socket ID:", socket.id);
-    });
+		// Логируем события для отладки
+		socket.on("connect", () => {
+			console.log("✅ Connected! Socket ID:", socket.id);
+		});
 
-    socket.on("connect_error", (err) => {
-      console.error("❌ Connection failed:", err.message);
-    });
+		socket.on("connect_error", (err) => {
+			console.error("❌ Connection failed:", err.message);
+		});
 
-    return socket;
-  }
+		return socket;
+	}
 };
 export default socket;
