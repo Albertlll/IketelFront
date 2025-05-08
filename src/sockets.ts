@@ -1,11 +1,11 @@
 import { io } from "socket.io-client";
 import { useUserStore } from "./entities/user/model/store";
 
-const SOCKET_URL = "https://iketel.ru/api";
+const SOCKET_URL = "https://iketel.ru";
 
 // Создаем инстанс
 const socket = io(SOCKET_URL, {
-	path: "/sio",
+	path: "/api/sio",
 	autoConnect: false,
 	withCredentials: true,
 });
