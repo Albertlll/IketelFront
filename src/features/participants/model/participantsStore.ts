@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-interface Participant {
+export interface Participant {
 	id: string;
 	name: string;
 }

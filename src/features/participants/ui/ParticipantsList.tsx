@@ -1,9 +1,10 @@
 import ParticipantCard from "@/entities/participant/ui/ParticipantCard";
-import type React from "react";
-import useParticipantsStore from "../model/participantsStore";
+import type { Participant } from "../model/participantsStore";
 
-const ParticipantsList: React.FC = () => {
-	const { participants } = useParticipantsStore();
+const ParticipantsList = ({
+	participants,
+}: { participants: Participant[] }) => {
+	// const { participants } = useParticipantsStore();
 
 	return (
 		<ul className=" w-full h-fit flex flex-wrap items-center gap-2">
