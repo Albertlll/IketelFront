@@ -7,6 +7,7 @@ import WorldsEditor from "./pages/edit-world";
 import { Game } from "./pages/game";
 import Library from "./pages/library";
 import Profile from "./pages/profile";
+import ToastDemoPage from "./pages/toast-demo";
 
 export const router = createBrowserRouter([
 	{
@@ -45,6 +46,10 @@ export const router = createBrowserRouter([
 			{
 				path: "/game",
 				element: <Game />,
+			},
+			{
+				path: "/toast-demo",
+				element: <ToastDemoPage />,
 			},
 			{
 				index: true,
