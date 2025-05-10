@@ -24,6 +24,10 @@ const Game = () => {
 			]);
 		});
 
+		socket.on("student_left", (player) => {
+			setParticipants((prev) => prev.filter((item) => item.id !== player.sid));
+		});
+
 		socket.on("error", (msg) => {
 			console.log(msg);
 		});
