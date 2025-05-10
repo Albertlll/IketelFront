@@ -13,6 +13,7 @@ interface TabElement {
 interface TabsPropsBase {
 	elements: Array<TabElement>;
 	className?: string;
+	initialSelectedIndex?: number; // Add initialSelectedIndex prop
 }
 
 // Варианты пропсов через объединение типов
@@ -37,10 +38,11 @@ function Tabs({
 	isSwitchOnly = false,
 	selectedIndex = 0,
 	onTabChange,
+	initialSelectedIndex = 0,
 }: TabsProps) {
 	// const { selectedInd, setSelected } = useTabsModel();
 
-	const [internalSelected, setInternalSelected] = useState(0);
+	const [internalSelected, setInternalSelected] = useState(initialSelectedIndex);
 	const selectedInd = isSwitchOnly ? selectedIndex : internalSelected;
 
 	const handleChange = (index: number) => {

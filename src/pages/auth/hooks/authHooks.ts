@@ -1,7 +1,9 @@
 import { useUserStore } from "@/entities/user/model/store";
+import { useToast } from "@/shared/toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
 import { loginRequest, registerRequest } from "../api/auth";
 import type { LoginFormData } from "../schemas/formSchemas";
 import {
@@ -18,15 +20,27 @@ export function useRegisterForm() {
 		resolver: zodResolver(registerSchema),
 	});
 
+	const { success, error: showError } = useToast();
+	const navigate = useNavigate();
+
 	const onSubmit = async (data: RegisterFormData) => {
 		try {
-			registerRequest({
+			await registerRequest({
 				username: data.username,
 				password: data.password,
 				email: data.email,
 			});
+			
+			success("Регистрация успешна!");
+			
+			// Redirect to login tab
+			// We need to reload the page to the auth page with the login tab selected
+			// This is done by adding a query parameter to the URL
+			navigate("/auth?tab=1");
+			
 		} catch (error) {
 			console.error(error);
+			showError("Ошибка при регистрации!");
 		}
 	};
 
@@ -44,12 +58,11 @@ export function useLoginForm() {
 	});
 
 	const { setUser } = useUserStore();
+	const { success, error: showError } = useToast();
+	const navigate = useNavigate();
 
 	const onSubmit = async (data: LoginFormData) => {
-		console.log("sssc");
 		try {
-			console.log("cdcsd");
-
 			const tokenData = await loginRequest({
 				password: data.password,
 				email: data.email,
@@ -62,21 +75,25 @@ export function useLoginForm() {
 			});
 
 			localStorage.setItem("token", tokenData.access_token);
+			
+			success("Вход выполнен успешно!");
+			
+			// Redirect to library page
+			navigate("/");
 		} catch (error) {
-			console.log("error");
-
 			const axiosError = error as AxiosError<{
 				message?: string;
 				statusCode?: number;
 			}>;
-
-			console.log(axiosError);
 
 			if (axiosError.response?.status === 401) {
 				console.log("Ошибка авторизации", axiosError.response.data.message);
 				setError("root", {
 					message: "Неверный логин или пароль!",
 				});
+				showError("Неверный логин или пароль!");
+			} else {
+				showError("Произошла ошибка. Пожалуйста, попробуйте снова.");
 			}
 		}
 	};
