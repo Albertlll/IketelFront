@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import QRCode from "react-qr-code";
 import GameHeader from "./GameHeader";
 const Game = () => {
-	const { joinCode, loadAdventure, isLoading } = useAdventureStore();
+	const { joinCode, loadAdventure, isLoading, error } = useAdventureStore();
 	const { worldId } = useEditorStore();
 	// const { addParticipant } = useParticipantsStore();
 
@@ -36,7 +36,15 @@ const Game = () => {
 	}, [loadAdventure, worldId]);
 	return (
 		<>
-			{isLoading ? (
+			{error ? (
+				<div className=" w-full h-full flex items-center justify-center">
+					<div className=" p-6 w-[300px] h-[100px]  flex justify-center items-center bg-white rounded-[20px] text-primary">
+						{error}
+					</div>
+				</div>
+			) : isLoading ? (
+				<Preloader />
+			) : (
 				<div className="w-full gap-3 grid grid-cols-[auto_400px]">
 					<GameHeader code={joinCode} />
 
@@ -47,8 +55,6 @@ const Game = () => {
 						className=" p-[35px] w-full h-full bg-white rounded-[20px]"
 					/>
 				</div>
-			) : (
-				<Preloader />
 			)}
 		</>
 	);

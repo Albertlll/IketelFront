@@ -27,6 +27,7 @@ const useAdventureStore = create<AdventureState>((set) => ({
 			});
 
 			socket.on("host_ready", (response) => {
+				console.log(response);
 				if ("error" in response) {
 					set({ error: response.error, isLoading: false });
 					return;
