@@ -1,5 +1,7 @@
 function GameHeader({ code }: { code: string }) {
 	console.log(code);
+
+	const handleStartGame = () => {};
 	return (
 		<>
 			<div className="w-full py-[14px] px-[57px] bg-white rounded-[20px] gap-3 flex justify-between">
@@ -10,6 +12,7 @@ function GameHeader({ code }: { code: string }) {
 
 			<button
 				type="button"
+				onClick={handleStartGame}
 				className=" w-full py-[14px] px-[57px] bg-white rounded-[20px] text-primary font-bold text-4xl"
 			>
 				начать игру
