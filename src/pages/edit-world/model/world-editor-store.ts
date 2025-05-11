@@ -99,7 +99,9 @@ export const useEditorStore = create<EditorStore>((set) => ({
 
 	loadWorldData: (worldId: number) => {
 		worldDataRequest(worldId).then((data) => {
+			console.log(data);
 			set({
+				worldId: data.id,
 				words: data.words || [],
 				worldTitle: data.title,
 				sentences: data.sentences,
@@ -120,7 +122,7 @@ export const useEditorStore = create<EditorStore>((set) => ({
 			is_public: true,
 			words: words.map(({ word, translation }) => ({ word, translation })),
 			sentences: sentences.map(({ sentence }) => ({ sentence })),
-			image: "",
+			image: worldImage,
 		})
 			.then((data) => console.log("Отправлено:", data))
 			.catch((err) => console.error("Ошибка:", err));
