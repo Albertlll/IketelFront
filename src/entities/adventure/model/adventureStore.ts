@@ -20,37 +20,23 @@ const useAdventureStore = create<AdventureState>((set) => ({
 		try {
 			set({ isLoading: true, error: null });
 
-			// Подключаем сокет и сразу отправляем host_join
 			connectSocket();
 
-			return new Promise<void>((resolve, reject) => {
-				socket.emit(
-					"host_join",
-					{
-						world_id: worldId,
-					},
-					(
-						response:
-							| {
-									join_code: string;
-									steps_count: number;
-							  }
-							| { error: string },
-					) => {
-						if ("error" in response) {
-							set({ error: response.error, isLoading: false });
-							reject(new Error(response.error));
-							return;
-						}
+			socket.emit("host_join", {
+				world_id: worldId,
+			});
 
-						set({
-							joinCode: response.join_code,
-							stepsCount: response.steps_count,
-							isLoading: false,
-						});
-						resolve();
-					},
-				);
+			socket.on("host_ready", (response) => {
+				if ("error" in response) {
+					set({ error: response.error, isLoading: false });
+					return;
+				}
+
+				set({
+					joinCode: response.join_code,
+					stepsCount: response.steps_count,
+					isLoading: false,
+				});
 			});
 		} catch (err) {
 			set({
