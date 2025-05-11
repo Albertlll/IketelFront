@@ -2,12 +2,13 @@ import useAdventureStore from "@/entities/adventure/model/adventureStore";
 import type { Participant } from "@/features/participants/model/participantsStore";
 import ParticipantsList from "@/features/participants/ui/ParticipantsList";
 import { useEditorStore } from "@/pages/edit-world/model/world-editor-store";
+import Preloader from "@/shared/preloader/preloader";
 import socket from "@/sockets";
 import { useEffect, useState } from "react";
 import QRCode from "react-qr-code";
 import GameHeader from "./GameHeader";
 const Game = () => {
-	const { joinCode, loadAdventure } = useAdventureStore();
+	const { joinCode, loadAdventure, isLoading } = useAdventureStore();
 	const { worldId } = useEditorStore();
 	// const { addParticipant } = useParticipantsStore();
 
@@ -25,6 +26,7 @@ const Game = () => {
 		});
 
 		socket.on("student_left", (player) => {
+			console.log("Отключился:", player);
 			setParticipants((prev) => prev.filter((item) => item.id !== player.sid));
 		});
 
@@ -33,16 +35,22 @@ const Game = () => {
 		});
 	}, [loadAdventure, worldId]);
 	return (
-		<div className="w-full gap-3 grid grid-cols-[auto_400px]">
-			<GameHeader code={joinCode} />
+		<>
+			{isLoading ? (
+				<div className="w-full gap-3 grid grid-cols-[auto_400px]">
+					<GameHeader code={joinCode} />
 
-			<ParticipantsList participants={participants} />
+					<ParticipantsList participants={participants} />
 
-			<QRCode
-				value={joinCode}
-				className=" p-[35px] w-full h-full bg-white rounded-[20px]"
-			/>
-		</div>
+					<QRCode
+						value={joinCode}
+						className=" p-[35px] w-full h-full bg-white rounded-[20px]"
+					/>
+				</div>
+			) : (
+				<Preloader />
+			)}
+		</>
 	);
 };
 
