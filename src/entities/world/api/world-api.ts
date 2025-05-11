@@ -19,6 +19,6 @@ interface worldPostData {
 export const postWorldDataRequest = async (
 	world: worldPostData,
 ): Promise<WorldType> => {
-	const response = await httpClient.post("/worlds", world);
+	const response = await httpClient.post("/worlds/", world);
 	return response.data;
 };
