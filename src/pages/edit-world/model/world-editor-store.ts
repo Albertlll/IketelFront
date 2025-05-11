@@ -118,7 +118,7 @@ export const useEditorStore = create<EditorStore>((set) => ({
 			is_public: true,
 			words: words.map(({ word, translation }) => ({ word, translation })),
 			sentences: sentences.map(({ sentence }) => ({ sentence })),
-			image: worldImage,
+			image: "",
 		})
 			.then((data) => console.log("Отправлено:", data))
 			.catch((err) => console.error("Ошибка:", err));
