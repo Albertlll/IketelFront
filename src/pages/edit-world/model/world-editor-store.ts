@@ -112,6 +112,8 @@ export const useEditorStore = create<EditorStore>((set) => ({
 		const { worldTitle, worldImage, words, sentences } =
 			useEditorStore.getState();
 
+		console.log(worldImage);
+
 		postWorldDataRequest({
 			title: worldTitle,
 			description: "",
