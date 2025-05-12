@@ -19,8 +19,12 @@ export const registerSchema = z
 	});
 
 export const loginSchema = z.object({
-	password: z.string(),
-	email: z.string(),
+	password: z.string()
+		.min(6, "Пароль должен быть не менее 6 символов")
+		.regex(/[A-Z]/, "Пароль должен содержать хотя бы одну заглавную букву")
+		.regex(/[0-9]/, "Пароль должен содержать хотя бы одну цифру"),
+	email: z.string()
+		.email("Некорректный формат email"),
 });
 
 export type RegisterFormData = z.infer<typeof registerSchema>;
