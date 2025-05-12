@@ -95,7 +95,8 @@ export const useEditorStore = create<EditorStore>((set) => ({
 		})),
 
 	// Общие методы
-	clearAll: () => set({ words: [], sentences: [], worldTitle: "" }),
+	clearAll: () =>
+		set({ words: [], sentences: [], worldTitle: "", worldImage: "" }),
 
 	loadWorldData: (worldId: number) => {
 		worldDataRequest(worldId).then((data) => {

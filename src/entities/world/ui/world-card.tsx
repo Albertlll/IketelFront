@@ -22,7 +22,7 @@ function WorldCard({
 						<img
 							src={imgUrl}
 							alt={title}
-							className="w-full h-full object-cover"
+							className="w-full h-full object-cover aspect-video"
 							onError={() => {
 								setImageError(true);
 								console.log(124);
