@@ -97,6 +97,22 @@ const Game = () => {
 		});
 
 		socket.on("", () => { });
+
+		// Функция очистки, которая будет вызвана при размонтировании компонента
+		return () => {
+			console.log("Отключение сокета при выходе из игры");
+			socket.off("new_student_joined");
+			socket.off("student_left");
+			socket.off("error");
+			socket.off("");
+			socket.off("leaderboard");
+			socket.off("host_ready");
+
+			// Отключаем сокет
+			if (socket.connected) {
+				socket.disconnect();
+			}
+		};
 	}, [loadAdventure, numericWorldId]);
 	return (
 		<>
