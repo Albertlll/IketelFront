@@ -1,5 +1,5 @@
 import useAdventureStore from "@/entities/adventure/model/adventureStore";
-import type { LeaderboardParticipant } from "@/features/leaderboard/model/leaderboardStore";
+// import type { LeaderboardParticipant } from "@/features/leaderboard/model/leaderboardStore";
 import LeaderboardList from "@/features/leaderboard/ui/ParticipantsList";
 import type { Participant } from "@/features/participants/model/participantsStore";
 import ParticipantsList from "@/features/participants/ui/ParticipantsList";
@@ -11,58 +11,58 @@ import { useEffect, useState } from "react";
 import QRCode from "react-qr-code";
 import GameHeader from "./GameHeader";
 
-const leaderboardData: LeaderboardParticipant[] = [
-	{
-		sid: "5f7d8g9h2k1l",
-		username: "Алексей",
-		score: 785,
-	},
-	{
-		sid: "3a4b5c6d7e8f",
-		username: "Мария",
-		score: 680,
-	},
-	{
-		sid: "1q2w3e4r5t6y",
-		username: "Иван",
-		score: 620,
-	},
-	{
-		sid: "9z8x7c6v5b4n",
-		username: "Екатерина",
-		score: 540,
-	},
-	{
-		sid: "2m3n4b5v6c7x",
-		username: "Дмитрий",
-		score: 495,
-	},
-	{
-		sid: "4p5o6i7u8y9t",
-		username: "Анна",
-		score: 430,
-	},
-	{
-		sid: "6r7t8y9u0i1o",
-		username: "Сергей",
-		score: 380,
-	},
-	{
-		sid: "8k9l0j1h2g3f",
-		username: "Ольга",
-		score: 320,
-	},
-	{
-		sid: "0d9s8f7g6h5j",
-		username: "Никита",
-		score: 275,
-	},
-	{
-		sid: "7g6h5j4k3l2q",
-		username: "Полина",
-		score: 210,
-	},
-];
+// const leaderboardData: LeaderboardParticipant[] = [
+// 	{
+// 		sid: "5f7d8g9h2k1l",
+// 		username: "Алексей",
+// 		score: 785,
+// 	},
+// 	{
+// 		sid: "3a4b5c6d7e8f",
+// 		username: "Мария",
+// 		score: 680,
+// 	},
+// 	{
+// 		sid: "1q2w3e4r5t6y",
+// 		username: "Иван",
+// 		score: 620,
+// 	},
+// 	{
+// 		sid: "9z8x7c6v5b4n",
+// 		username: "Екатерина",
+// 		score: 540,
+// 	},
+// 	{
+// 		sid: "2m3n4b5v6c7x",
+// 		username: "Дмитрий",
+// 		score: 495,
+// 	},
+// 	{
+// 		sid: "4p5o6i7u8y9t",
+// 		username: "Анна",
+// 		score: 430,
+// 	},
+// 	{
+// 		sid: "6r7t8y9u0i1o",
+// 		username: "Сергей",
+// 		score: 380,
+// 	},
+// 	{
+// 		sid: "8k9l0j1h2g3f",
+// 		username: "Ольга",
+// 		score: 320,
+// 	},
+// 	{
+// 		sid: "0d9s8f7g6h5j",
+// 		username: "Никита",
+// 		score: 275,
+// 	},
+// 	{
+// 		sid: "7g6h5j4k3l2q",
+// 		username: "Полина",
+// 		score: 210,
+// 	},
+// ];
 const Game = () => {
 	const {
 		joinCode,
