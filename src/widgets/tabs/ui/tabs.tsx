@@ -19,17 +19,17 @@ interface TabsPropsBase {
 type TabsProps = TabsPropsBase &
 	(
 		| {
-				// Режим с контентом (по умолчанию)
-				isSwitchOnly?: false; // явно false
-				selectedIndex?: never; // запрещаем эти пропсы
-				onTabChange?: never;
-		  }
+			// Режим с контентом (по умолчанию)
+			isSwitchOnly?: false; // явно false
+			selectedIndex?: never; // запрещаем эти пропсы
+			onTabChange?: never;
+		}
 		| {
-				// Режим переключателя
-				isSwitchOnly: true;
-				selectedIndex: number;
-				onTabChange: (index: number) => void;
-		  }
+			// Режим переключателя
+			isSwitchOnly: true;
+			selectedIndex: number;
+			onTabChange: (index: number) => void;
+		}
 	);
 
 function Tabs({
@@ -53,7 +53,7 @@ function Tabs({
 
 	return (
 		<>
-			<div className=" w-fit rounded-[20px] px-[20px] text-[20px] py-[10px] font-medium bg-white flex gap-2  justify-between">
+			<div className="w-full sm:w-fit rounded-[20px] px-[10px] sm:px-[20px] text-[16px] sm:text-[18px] md:text-[20px] py-[8px] sm:py-[10px] font-medium bg-white flex gap-1 sm:gap-2 justify-center sm:justify-between">
 				{elements.map((elem, ind) => (
 					<div className="flex items-center gap-2" key={`tab-${elem.title}`}>
 						<button

@@ -17,21 +17,21 @@ function CreateWorldHeader({
 		worldId,
 	} = useEditorStore();
 
-	const publish = () => {};
-	const download = () => {};
+	const publish = () => { };
+	const download = () => { };
 
 	const navigate = useNavigate();
 
 	const play = async () => {
 		try {
 			navigate(`/game/${worldId}`);
-		} catch (error) {}
+		} catch (error) { }
 	};
 
 	publish;
 	return (
-		<div className=" flex gap-4 flex-col">
-			<div className=" w-full flex justify-between">
+		<div className="flex gap-3 sm:gap-4 flex-col">
+			<div className="w-full flex flex-col sm:flex-row gap-3 sm:gap-4 sm:justify-between">
 				<Input
 					onChange={(e) => {
 						setWorldTitle(e.target.value);
@@ -39,17 +39,17 @@ function CreateWorldHeader({
 					placeholder="Название мирка"
 					disabled={editorType === "read"}
 					value={worldTitle}
-					className="w-80"
+					className="w-full sm:w-80"
 				/>
 
 				<Input
 					type="file"
 					onImageLoad={(base64) => setWorldImage(base64)}
-					className="w-80"
+					className="w-full sm:w-80"
 				/>
 			</div>
 
-			<div className=" bg-white h-fit flex justify-between rounded-[20px] px-[17px] py-[23px]">
+			<div className="bg-white h-fit flex flex-col sm:flex-row gap-4 sm:gap-0 sm:justify-between rounded-[15px] sm:rounded-[20px] px-[10px] sm:px-[17px] py-[15px] sm:py-[23px]">
 				<Tabs
 					isSwitchOnly={true}
 					elements={[{ title: "Слова" }, { title: "Предложения" }]}

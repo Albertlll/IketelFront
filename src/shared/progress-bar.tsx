@@ -8,9 +8,9 @@ export const ProgressBar = ({ value, max }: ProgressBarProps) => (
 		<progress
 			value={value}
 			max={max}
-			className="w-full h-5 bg-secondary rounded-full
-               [&::-webkit-progress-value]:bg-primary [&::-webkit-progress-value]:rounded-full
-               [&::-moz-progress-bar]:bg-primary"
+			className="w-full h-3 sm:h-4 md:h-5 bg-secondary rounded-full
+		             [&::-webkit-progress-value]:bg-primary [&::-webkit-progress-value]:rounded-full
+		             [&::-moz-progress-bar]:bg-primary"
 		/>
 	</div>
 );
