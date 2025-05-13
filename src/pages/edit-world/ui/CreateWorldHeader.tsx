@@ -49,7 +49,7 @@ function CreateWorldHeader({
 				/>
 			</div>
 
-			<div className="bg-white h-fit flex flex-col sm:flex-row gap-4 sm:gap-0 sm:justify-between rounded-[15px] sm:rounded-[20px] px-[10px] sm:px-[17px] py-[15px] sm:py-[23px]">
+			<div className="bg-white h-fit flex flex-col sm:flex-row gap-4 sm:gap-2 sm:justify-between rounded-[15px] sm:rounded-[20px] px-[10px] sm:px-[17px] py-[15px] sm:py-[23px]">
 				<Tabs
 					isSwitchOnly={true}
 					elements={[{ title: "Слова" }, { title: "Предложения" }]}
@@ -57,13 +57,15 @@ function CreateWorldHeader({
 					onTabChange={(index: number) => setIsWordsPage(!index)}
 				/>
 
-				<ControlBtns
-					mode={editorType}
-					publishHandler={publish}
-					saveHandler={sendWorldData}
-					playHandler={play}
-					downloadHandler={download}
-				/>
+				<div className="flex justify-center sm:justify-end">
+					<ControlBtns
+						mode={editorType}
+						publishHandler={publish}
+						saveHandler={sendWorldData}
+						playHandler={play}
+						downloadHandler={download}
+					/>
+				</div>
 			</div>
 		</div>
 	);

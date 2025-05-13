@@ -16,7 +16,7 @@ function ControlBtns({
 	mode: "read" | "create";
 }) {
 	return (
-		<div className="flex gap-2 sm:gap-4">
+		<div className="flex flex-wrap gap-2 sm:gap-4">
 			<button
 				onClick={saveHandler}
 				type="button"
