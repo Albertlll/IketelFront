@@ -14,6 +14,7 @@ function CreateWorldHeader({
 		setWorldTitle,
 		sendWorldData,
 		setWorldImage,
+		worldId,
 	} = useEditorStore();
 
 	const publish = () => {};
@@ -23,10 +24,8 @@ function CreateWorldHeader({
 
 	const play = async () => {
 		try {
-			navigate("/game");
-		} catch (error) {
-			console.error("Failed to start adventure:", error);
-		}
+			navigate(`/game/${worldId}`);
+		} catch (error) {}
 	};
 
 	publish;

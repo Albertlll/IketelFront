@@ -4,11 +4,11 @@ import LeaderboardList from "@/features/leaderboard/ui/ParticipantsList";
 import type { Participant } from "@/features/participants/model/participantsStore";
 import ParticipantsList from "@/features/participants/ui/ParticipantsList";
 import { cn } from "@/lib/utils";
-import { useEditorStore } from "@/pages/edit-world/model/world-editor-store";
 import Preloader from "@/shared/preloader/preloader";
 import socket from "@/sockets";
 import { useEffect, useState } from "react";
 import QRCode from "react-qr-code";
+import { useParams } from "react-router";
 import GameHeader from "./GameHeader";
 
 // const leaderboardData: LeaderboardParticipant[] = [
@@ -72,12 +72,12 @@ const Game = () => {
 		error,
 		leaderboardData,
 	} = useAdventureStore();
-	const { worldId } = useEditorStore();
-
+	// const { worldId } = useEditorStore();
+	const { worldId } = useParams();
 	const [participants, setParticipants] = useState<Participant[]>([]);
-
+	const numericWorldId = worldId ? Number.parseInt(worldId) : 0;
 	useEffect(() => {
-		loadAdventure(worldId);
+		loadAdventure(numericWorldId);
 
 		socket.on("new_student_joined", (player) => {
 			console.log("New player:", player);
@@ -97,7 +97,7 @@ const Game = () => {
 		});
 
 		socket.on("", () => {});
-	}, [loadAdventure, worldId]);
+	}, [loadAdventure, numericWorldId]);
 	return (
 		<>
 			{error ? (

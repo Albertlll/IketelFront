@@ -51,7 +51,6 @@ export const useEditorStore = create<EditorStore>((set) => ({
 					id: Date.now().toString(),
 					word: "Кояш",
 					translation: "Солнце",
-					world_id: 1,
 				},
 			],
 		})),

@@ -43,8 +43,18 @@ export const router = createBrowserRouter([
 				},
 			},
 			{
-				path: "/game",
+				path: "/game/:worldId", // Добавляем параметр worldId
 				element: <Game />,
+				loader: ({ params }) => {
+					const token = useUserStore.getState().token;
+					if (!token) return redirect("/auth");
+
+					if (!params.worldId || Number.isNaN(Number(params.worldId))) {
+						return redirect("/worlds");
+					}
+
+					return null;
+				},
 			},
 			{
 				index: true,
