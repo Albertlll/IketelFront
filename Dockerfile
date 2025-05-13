@@ -20,7 +20,7 @@ RUN --mount=type=secret,id=ssl_key cat /run/secrets/ssl_key > /app/ssl/server-ke
 RUN --mount=type=secret,id=ssl_cert cat /run/secrets/ssl_cert > /app/ssl/server-cert.crt
 RUN --mount=type=secret,id=ssl_ca cat /run/secrets/ssl_ca > /app/ssl/server-ca.crt
 
-RUN npm run build
+# RUN npm run build
 # Явно указываем порт для Vite preview
 ENV PORT=3000
 EXPOSE 3000
