@@ -18,7 +18,49 @@ function CreateWorldHeader({
 	} = useEditorStore();
 
 	const publish = () => { };
-	const download = () => { };
+	const download = () => {
+		// Получаем текущее состояние хранилища
+		const { worldId, worldTitle, worldImage, words, sentences } = useEditorStore.getState();
+
+		// Формируем JSON объект в нужном формате
+		const jsonData = {
+			id: worldId,
+			title: worldTitle,
+			image: worldImage || "",
+			description: "",
+			words: words.map((word, index) => ({
+				id: Number(word.id) || index + 1,
+				word: word.word,
+				translation: word.translation,
+				world_id: worldId
+			})),
+			sentences: sentences.map((sentence, index) => ({
+				id: Number(sentence.id) || index + 1,
+				sentence: sentence.sentence,
+				world_id: worldId
+			})),
+			is_public: true
+		};
+
+		// Создаем Blob с JSON данными
+		const blob = new Blob([JSON.stringify(jsonData, null, 2)], { type: "application/json" });
+
+		// Создаем URL для Blob
+		const url = URL.createObjectURL(blob);
+
+		// Создаем временный элемент <a> для скачивания файла
+		const a = document.createElement("a");
+		a.href = url;
+		a.download = `${worldTitle || "world"}.json`;
+
+		// Добавляем элемент в DOM, имитируем клик и удаляем элемент
+		document.body.appendChild(a);
+		a.click();
+		document.body.removeChild(a);
+
+		// Освобождаем URL
+		URL.revokeObjectURL(url);
+	};
 
 	const navigate = useNavigate();
 
