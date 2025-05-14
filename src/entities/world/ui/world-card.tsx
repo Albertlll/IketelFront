@@ -1,12 +1,40 @@
 import { useState } from "react";
 import { Link } from "react-router";
+import { deleteWorldRequest } from "@/entities/world/api/world-api";
+import { useToast } from "@/shared/toast/hooks/hooks";
 import arrow from "./img/arrow.svg";
+
 function WorldCard({
 	worldId,
 	imgUrl,
 	title,
-}: { worldId: number; title: string; imgUrl: string }) {
+	onDelete,
+}: {
+	worldId: number;
+	title: string;
+	imgUrl: string;
+	onDelete?: (worldId: number) => void;
+}) {
 	const [imageError, setImageError] = useState(!imgUrl);
+	const { showSuccess, showError } = useToast();
+
+	const handleDelete = async (e: React.MouseEvent) => {
+		e.preventDefault();
+		e.stopPropagation();
+
+		if (window.confirm(`Вы уверены, что хотите удалить мир "${title}"?`)) {
+			try {
+				await deleteWorldRequest(worldId);
+				showSuccess("Мир успешно удален");
+				if (onDelete) {
+					onDelete(worldId);
+				}
+			} catch (error) {
+				console.error("Ошибка при удалении мира:", error);
+				showError("Не удалось удалить мир");
+			}
+		}
+	};
 
 	return (
 		<Link to={`/worlds/${worldId}`}>
@@ -35,9 +63,21 @@ function WorldCard({
 					<div className="w-full truncate text-base sm:text-lg">
 						{title || "Без названия"}
 					</div>
-					<button type="button">
-						<img src={arrow} alt="" />
-					</button>
+					<div className="flex gap-2">
+						{onDelete && (
+							<button
+								type="button"
+								className="text-red-500 hover:text-red-700 font-bold"
+								onClick={handleDelete}
+								title="Удалить мир"
+							>
+								✕
+							</button>
+						)}
+						<button type="button">
+							<img src={arrow} alt="" />
+						</button>
+					</div>
 				</div>
 			</div>
 		</Link>
