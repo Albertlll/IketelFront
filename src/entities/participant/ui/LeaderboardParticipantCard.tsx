@@ -1,5 +1,5 @@
 import { ProgressBar } from "@/shared/progress-bar";
-import { steps } from "motion/react";
+// import { steps } from "motion/react";
 
 interface ParticipantCardProps {
 	username: string;
