@@ -6,7 +6,12 @@ import { Link } from "react-router";
 function WorldsGrid({
 	worlds,
 	addBtn = false,
-}: { worlds: WorldPreviewType[]; addBtn?: boolean }) {
+	onWorldDelete,
+}: {
+	worlds: WorldPreviewType[];
+	addBtn?: boolean;
+	onWorldDelete?: (worldId: number) => void;
+}) {
 	return (
 		<div className="grid w-full gap-4 sm:gap-6 md:gap-8 lg:gap-x-18 lg:gap-y-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-[repeat(auto-fill,minmax(clamp(280px,30%,400px),1fr))]">
 			{addBtn && (
@@ -26,6 +31,7 @@ function WorldsGrid({
 					key={world.id}
 					worldId={world.id}
 					title={world.title}
+					onDelete={onWorldDelete}
 				/>
 			))}
 		</div>

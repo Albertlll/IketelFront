@@ -3,7 +3,7 @@ import { wordsListRequest } from "@/pages/library/api/worlds-api";
 import Preloader from "@/shared/preloader/preloader";
 import { useNavbarStore } from "@/widgets/navbar/model/navbarState";
 import WorldsGrid from "@/widgets/worlds-grid";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 function Library() {
 	const { setSelectedIndex } = useNavbarStore();
@@ -11,15 +11,23 @@ function Library() {
 	const [worlds, setWorlds] = useState<WorldPreviewType[]>([]);
 	const [loading, setLoading] = useState(true);
 
-	useEffect(() => {
-		setSelectedIndex(1);
-
-		wordsListRequest().then((data) => {
+	// Загрузка списка публичных миров
+	const loadWorlds = useCallback(async () => {
+		try {
+			const data = await wordsListRequest();
 			console.log(data);
 			setWorlds(data);
 			setLoading(false);
-		});
-	}, [setSelectedIndex]);
+		} catch (error) {
+			console.error("Ошибка при загрузке миров:", error);
+			setLoading(false);
+		}
+	}, []);
+
+	useEffect(() => {
+		setSelectedIndex(1);
+		loadWorlds();
+	}, [setSelectedIndex, loadWorlds]);
 
 	return loading ? <Preloader /> : <WorldsGrid worlds={worlds} />;
 }

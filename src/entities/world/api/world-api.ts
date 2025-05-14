@@ -22,3 +22,12 @@ export const postWorldDataRequest = async (
 	const response = await httpClient.post("/worlds/", world);
 	return response.data;
 };
+
+/**
+ * Удаляет мир по его ID
+ * @param worldId ID мира для удаления
+ * @returns Promise с результатом операции
+ */
+export const deleteWorldRequest = async (worldId: number): Promise<void> => {
+	await httpClient.delete(`/worlds/${worldId}`);
+};
