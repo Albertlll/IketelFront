@@ -7,7 +7,7 @@ const ParticipantsList = ({
 	// const { participants } = useParticipantsStore();
 
 	return (
-		<ul className="w-full h-fit flex flex-wrap items-center gap-1 sm:gap-2 md:gap-3 p-2 sm:p-3 md:p-4 bg-white rounded-[15px] sm:rounded-[20px]">
+		<ul className="w-full h-fit flex flex-wrap items-center gap-1 sm:gap-2 md:gap-3  rounded-[15px] sm:rounded-[20px]">
 			{participants.map((participant) => (
 				<li key={participant.id} className="w-fit h-fit mb-1 sm:mb-2">
 					<ParticipantCard playerName={participant.name} />

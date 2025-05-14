@@ -1,4 +1,5 @@
 import { ProgressBar } from "@/shared/progress-bar";
+import { steps } from "motion/react";
 
 interface ParticipantCardProps {
 	username: string;
@@ -11,7 +12,8 @@ const LeaderbordParticipantCard = ({
 	score,
 	sid,
 	place,
-}: ParticipantCardProps & { place: number }) => {
+	step,
+}: ParticipantCardProps & { place: number; step: number }) => {
 	console.log(sid);
 	return (
 		<div className="w-full grid gap-2 grid-cols-1 sm:grid-cols-[auto_auto] md:grid-cols-[340px_auto]">
@@ -28,7 +30,7 @@ const LeaderbordParticipantCard = ({
 				</div>
 			</div>
 
-			<ProgressBar max={100} value={50} />
+			<ProgressBar max={9} value={step} />
 		</div>
 	);
 };

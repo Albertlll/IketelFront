@@ -4,6 +4,7 @@ export interface LeaderboardParticipant {
 	sid: string;
 	username: string;
 	score: number;
+	step: number;
 }
 
 interface ParticipantsState {
