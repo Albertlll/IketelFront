@@ -10,7 +10,7 @@ function WorldCard({
 
 	return (
 		<Link to={`/worlds/${worldId}`}>
-			<div className=" flex flex-col overflow-hidden rounded-[20px] w-full h-full border-4 border-white bg-white transition-colors duration-200 hover:border-primary">
+			<div className="flex flex-col overflow-hidden rounded-[15px] sm:rounded-[20px] w-full h-full border-2 sm:border-3 md:border-4 border-white bg-white transition-colors duration-200 hover:border-primary">
 				{/* <img src={imgUrl} alt="" className=" h-full object-cover" /> */}
 
 				<div className="flex-grow overflow-hidden">
@@ -31,8 +31,8 @@ function WorldCard({
 					)}
 				</div>
 
-				<div className="w-full h-fit flex gap-3 justify-between px-8 py-2">
-					<div className="w-full truncate text-lg">
+				<div className="w-full h-fit flex gap-2 sm:gap-3 justify-between px-4 sm:px-6 md:px-8 py-2">
+					<div className="w-full truncate text-base sm:text-lg">
 						{title || "Без названия"}
 					</div>
 					<button type="button">

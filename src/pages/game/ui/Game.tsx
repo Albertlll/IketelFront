@@ -96,13 +96,29 @@ const Game = () => {
 			console.log(msg);
 		});
 
-		socket.on("", () => {});
+		socket.on("", () => { });
+
+		// Функция очистки, которая будет вызвана при размонтировании компонента
+		return () => {
+			console.log("Отключение сокета при выходе из игры");
+			socket.off("new_student_joined");
+			socket.off("student_left");
+			socket.off("error");
+			socket.off("");
+			socket.off("leaderboard");
+			socket.off("host_ready");
+
+			// Отключаем сокет
+			if (socket.connected) {
+				socket.disconnect();
+			}
+		};
 	}, [loadAdventure, numericWorldId]);
 	return (
 		<>
 			{error ? (
-				<div className=" w-full h-full flex items-center justify-center">
-					<div className=" p-6 w-[300px] h-[100px]  flex justify-center items-center bg-white rounded-[20px] text-primary">
+				<div className="w-full h-full flex items-center justify-center">
+					<div className="p-4 sm:p-6 w-[90%] sm:w-[300px] h-[80px] sm:h-[100px] flex justify-center items-center bg-white rounded-[15px] sm:rounded-[20px] text-primary text-sm sm:text-base">
 						{error}
 					</div>
 				</div>
@@ -111,8 +127,8 @@ const Game = () => {
 			) : (
 				<div
 					className={cn(
-						"w-full gap-3 grid grid-cols-[auto_400px]",
-						isStarted && " flex flex-col",
+						"w-full gap-2 sm:gap-3 grid grid-cols-1 md:grid-cols-[auto_400px]",
+						isStarted && "flex flex-col",
 					)}
 				>
 					<GameHeader code={joinCode} />
@@ -123,7 +139,8 @@ const Game = () => {
 
 							<QRCode
 								value={joinCode}
-								className=" p-[35px] w-full h-full bg-white rounded-[20px]"
+								className="p-[15px] sm:p-[25px] md:p-[35px] w-full h-full bg-white rounded-[15px] sm:rounded-[20px]"
+								size={200}
 							/>
 						</>
 					) : (
