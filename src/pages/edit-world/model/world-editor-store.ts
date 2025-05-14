@@ -1,8 +1,5 @@
 import { worldDataRequest } from "@/entities/world";
-import {
-	postWorldDataRequest,
-	smartSaveWorld,
-} from "@/entities/world/api/world-api";
+import { smartSaveWorld } from "@/entities/world/api/world-api";
 import type { SentenceType, WordType } from "@/entities/world/types/types";
 import { create } from "zustand";
 

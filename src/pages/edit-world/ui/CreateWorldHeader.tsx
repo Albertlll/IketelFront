@@ -15,7 +15,6 @@ function CreateWorldHeader({
 		sendWorldData,
 		setWorldImage,
 		worldId,
-		isOwner,
 	} = useEditorStore();
 
 	const publish = () => {};
