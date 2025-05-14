@@ -31,3 +31,16 @@ export const postWorldDataRequest = async (
 export const deleteWorldRequest = async (worldId: number): Promise<void> => {
 	await httpClient.delete(`/worlds/${worldId}`);
 };
+
+/**
+ * Изменяет статус публичности мира
+ * @param worldId ID мира для изменения
+ * @param isPublic Новый статус публичности (true/false)
+ * @returns Promise с результатом операции
+ */
+export const updateWorldVisibilityRequest = async (
+	worldId: number,
+	isPublic: boolean,
+): Promise<void> => {
+	await httpClient.patch(`/worlds/${worldId}/visibility`, { is_public: isPublic });
+};

@@ -24,12 +24,34 @@ function Library() {
 		}
 	}, []);
 
+	// Обработчик изменения публичности мира
+	const handleWorldVisibilityChange = useCallback((worldId: number, isPublic: boolean) => {
+		// Если мир стал приватным, удаляем его из списка публичных миров
+		if (!isPublic) {
+			setWorlds((prevWorlds) => prevWorlds.filter((world) => world.id !== worldId));
+		} else {
+			// Обновляем статус публичности
+			setWorlds((prevWorlds) =>
+				prevWorlds.map((world) =>
+					world.id === worldId ? { ...world, is_public: isPublic } : world
+				)
+			);
+		}
+	}, []);
+
 	useEffect(() => {
 		setSelectedIndex(1);
 		loadWorlds();
 	}, [setSelectedIndex, loadWorlds]);
 
-	return loading ? <Preloader /> : <WorldsGrid worlds={worlds} />;
+	return loading ? (
+		<Preloader />
+	) : (
+		<WorldsGrid
+			worlds={worlds}
+			onWorldVisibilityChange={handleWorldVisibilityChange}
+		/>
+	);
 }
 
 export default Library;

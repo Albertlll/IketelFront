@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router";
-import { deleteWorldRequest } from "@/entities/world/api/world-api";
+import { deleteWorldRequest, updateWorldVisibilityRequest } from "@/entities/world/api/world-api";
 import { useToast } from "@/shared/toast/hooks/hooks";
 import arrow from "./img/arrow.svg";
 
@@ -9,14 +9,36 @@ function WorldCard({
 	imgUrl,
 	title,
 	onDelete,
+	isPublic,
+	isOwner,
+	onVisibilityChange,
 }: {
 	worldId: number;
 	title: string;
 	imgUrl: string;
+	isPublic?: boolean;
+	isOwner?: boolean;
 	onDelete?: (worldId: number) => void;
+	onVisibilityChange?: (worldId: number, isPublic: boolean) => void;
 }) {
 	const [imageError, setImageError] = useState(!imgUrl);
 	const { showSuccess, showError } = useToast();
+
+	const handleVisibilityChange = async (e: React.MouseEvent) => {
+		e.preventDefault();
+		e.stopPropagation();
+
+		if (!onVisibilityChange) return;
+
+		try {
+			await updateWorldVisibilityRequest(worldId, !isPublic);
+			showSuccess(isPublic ? "Мир стал приватным" : "Мир стал публичным");
+			onVisibilityChange(worldId, !isPublic);
+		} catch (error) {
+			console.error("Ошибка при изменении публичности мира:", error);
+			showError("Не удалось изменить публичность мира");
+		}
+	};
 
 	const handleDelete = async (e: React.MouseEvent) => {
 		e.preventDefault();
@@ -64,6 +86,16 @@ function WorldCard({
 						{title || "Без названия"}
 					</div>
 					<div className="flex gap-2">
+						{isOwner && onVisibilityChange && (
+							<button
+								type="button"
+								className={`${isPublic ? "text-green-500" : "text-gray-500"} hover:opacity-80 font-bold`}
+								onClick={handleVisibilityChange}
+								title={isPublic ? "Сделать приватным" : "Сделать публичным"}
+							>
+								{isPublic ? "👁️" : "👁️‍🗨️"}
+							</button>
+						)}
 						{onDelete && (
 							<button
 								type="button"

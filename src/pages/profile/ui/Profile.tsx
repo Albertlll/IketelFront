@@ -34,10 +34,25 @@ function Profile() {
 		setWorlds((prevWorlds) => prevWorlds.filter((world) => world.id !== worldId));
 	}, []);
 
+	// Обработчик изменения публичности мира
+	const handleWorldVisibilityChange = useCallback((worldId: number, isPublic: boolean) => {
+		// Обновляем список миров, изменяя публичность мира с указанным ID
+		setWorlds((prevWorlds) =>
+			prevWorlds.map((world) =>
+				world.id === worldId ? { ...world, is_public: isPublic } : world
+			)
+		);
+	}, []);
+
 	return loading ? (
 		<Preloader />
 	) : (
-		<WorldsGrid addBtn worlds={worlds} onWorldDelete={handleWorldDelete} />
+		<WorldsGrid
+			addBtn
+			worlds={worlds}
+			onWorldDelete={handleWorldDelete}
+			onWorldVisibilityChange={handleWorldVisibilityChange}
+		/>
 	);
 }
 

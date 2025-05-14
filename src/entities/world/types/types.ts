@@ -2,6 +2,8 @@ export interface WorldPreviewType {
 	id: number;
 	title: string;
 	image: string;
+	is_public?: boolean;
+	is_owner?: boolean;
 }
 
 export interface WordType {
@@ -22,4 +24,6 @@ export interface WorldType {
 	description: string;
 	words: WordType[];
 	sentences: SentenceType[];
+	is_public?: boolean;
+	is_owner?: boolean;
 }
