@@ -1,8 +1,8 @@
 import { io } from "socket.io-client";
 import { useUserStore } from "./entities/user/model/store";
 
-// const SOCKET_URL = "ws://localhost:8000";
-const SOCKET_URL = "wss://iketel.ru";
+const SOCKET_URL = "ws://localhost:8000";
+// const SOCKET_URL = "wss://iketel.ru";
 
 // Создаем инстанс
 const socket = io(SOCKET_URL, {
