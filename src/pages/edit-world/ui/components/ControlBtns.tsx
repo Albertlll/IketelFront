@@ -13,7 +13,7 @@ function ControlBtns({
 	playHandler: () => void;
 	publishHandler: () => void;
 	downloadHandler: () => void;
-	mode: "read" | "create";
+	mode: "read" | "create" | "edit";
 }) {
 	return (
 		<div className="flex flex-wrap gap-2 sm:gap-4">

@@ -29,7 +29,7 @@ function WordsEditor() {
 				))}
 			</AnimatePresence>
 
-			{editorType === "create" && (
+			{(editorType === "create" || editorType === "edit") && (
 				<motion.div layout className=" w-fit self-center">
 					<Button onClick={addWord}>Добавить</Button>
 				</motion.div>

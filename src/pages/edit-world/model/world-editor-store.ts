@@ -1,5 +1,8 @@
 import { worldDataRequest } from "@/entities/world";
-import { postWorldDataRequest } from "@/entities/world/api/world-api";
+import {
+	postWorldDataRequest,
+	smartSaveWorld,
+} from "@/entities/world/api/world-api";
 import type { SentenceType, WordType } from "@/entities/world/types/types";
 import { create } from "zustand";
 
@@ -14,8 +17,8 @@ interface EditorStore {
 	updateSentence: (id: string, data: Partial<SentenceType>) => void;
 	clearAll: () => void;
 	loadWorldData: (worldId: number) => void;
-	editorType: "read" | "create";
-	setEditorType: (editorType: "read" | "create") => void;
+	editorType: "read" | "create" | "edit";
+	setEditorType: (editorType: "read" | "create" | "edit") => void;
 	worldTitle: string;
 	worldImage: string;
 	setWorldTitle: (worldTitle: string) => void;
@@ -24,15 +27,17 @@ interface EditorStore {
 	setWorldId: (worldId: number) => void;
 
 	sendWorldData: () => void;
+	isOwner: boolean;
 }
 
-export const useEditorStore = create<EditorStore>((set) => ({
+export const useEditorStore = create<EditorStore>((set, get) => ({
 	words: [],
 	sentences: [],
 	editorType: "create",
 	worldTitle: "",
 	worldImage: "",
 	worldId: 0,
+	isOwner: false,
 
 	setWorldTitle: (worldTitle) => set({ worldTitle }),
 	setWorldImage: (worldImage) => set({ worldImage }),
@@ -95,7 +100,13 @@ export const useEditorStore = create<EditorStore>((set) => ({
 
 	// Общие методы
 	clearAll: () =>
-		set({ words: [], sentences: [], worldTitle: "", worldImage: "" }),
+		set({
+			words: [],
+			sentences: [],
+			worldTitle: "",
+			worldImage: "",
+			isOwner: false,
+		}),
 
 	loadWorldData: (worldId: number) => {
 		worldDataRequest(worldId).then((data) => {
@@ -105,25 +116,34 @@ export const useEditorStore = create<EditorStore>((set) => ({
 				words: data.words || [],
 				worldTitle: data.title,
 				sentences: data.sentences,
+				isOwner: data.is_owner,
 			});
+
+			if (data.is_owner) {
+				set({ editorType: "edit" });
+			}
 		});
 	},
 
 	sendWorldData: () => {
 		// Берём всё нужное ДО асинхронной операции
-		const { worldTitle, worldImage, words, sentences } =
+		const { worldTitle, worldImage, words, sentences, isOwner } =
 			useEditorStore.getState();
 
 		console.log(worldImage);
 
-		postWorldDataRequest({
-			title: worldTitle,
-			description: "",
-			is_public: true,
-			words: words.map(({ word, translation }) => ({ word, translation })),
-			sentences: sentences.map(({ sentence }) => ({ sentence })),
-			image: worldImage,
-		})
+		smartSaveWorld(
+			{
+				title: worldTitle,
+				description: "",
+				is_public: true,
+				words: words.map(({ word, translation }) => ({ word, translation })),
+				sentences: sentences.map(({ sentence }) => ({ sentence })),
+				image: worldImage,
+			},
+			isOwner,
+			get().worldId,
+		)
 			.then((data) => console.log("Отправлено:", data))
 			.catch((err) => console.error("Ошибка:", err));
 	},

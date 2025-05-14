@@ -32,11 +32,12 @@ function SentencesEditor() {
 				))}
 			</AnimatePresence>
 
-			{editorType === "create" && (
-				<motion.div layout className="w-fit self-center">
-					<Button onClick={addSentence}>Добавить</Button>
-				</motion.div>
-			)}
+			{editorType === "create" ||
+				(editorType === "edit" && (
+					<motion.div layout className="w-fit self-center">
+						<Button onClick={addSentence}>Добавить</Button>
+					</motion.div>
+				))}
 		</motion.div>
 	);
 }

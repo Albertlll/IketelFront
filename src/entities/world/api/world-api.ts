@@ -23,6 +23,34 @@ export const postWorldDataRequest = async (
 	return response.data;
 };
 
+export const putWorldDataRequest = async (
+	worldId: number,
+	worldData: worldPostData,
+): Promise<WorldType> => {
+	const response = await httpClient.put<WorldType>(
+		`/worlds/${worldId}`,
+		worldData,
+	);
+	return response.data;
+};
+
+export const smartSaveWorld = async (
+	worldData: worldPostData,
+	isOwner: boolean,
+	worldId?: number,
+): Promise<WorldType> => {
+	if (isOwner) {
+		if (!worldId) throw new Error("Для обновления мира требуется worldId");
+		const response = await httpClient.put<WorldType>(
+			`/worlds/${worldId}`,
+			worldData,
+		);
+		return response.data;
+	}
+	const response = await httpClient.post<WorldType>("/worlds/", worldData);
+	return response.data;
+};
+
 /**
  * Удаляет мир по его ID
  * @param worldId ID мира для удаления

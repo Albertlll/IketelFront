@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { Link } from "react-router";
 import { deleteWorldRequest } from "@/entities/world/api/world-api";
 import { useToast } from "@/shared/toast/hooks/hooks";
+import { useState } from "react";
+import { Link } from "react-router";
 import arrow from "./img/arrow.svg";
 
 function WorldCard({

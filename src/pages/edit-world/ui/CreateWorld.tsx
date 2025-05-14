@@ -6,7 +6,7 @@ import CreateWorldHeader from "./CreateWorldHeader";
 import SentencesEditor from "./SentencesEditor";
 import WordsEditor from "./WordsEditor";
 
-function WorldsEditor({ mode }: { mode: "read" | "create" }) {
+function WorldsEditor({ mode }: { mode: "read" | "create" | "edit" }) {
 	const { setSelectedIndex } = useNavbarStore();
 
 	const { id } = useParams<{ id: string }>();
@@ -20,9 +20,8 @@ function WorldsEditor({ mode }: { mode: "read" | "create" }) {
 		console.log(id);
 		setWorldId(Number(id));
 
-		console.log(mode);
 		setEditorType(mode);
-		if (mode === "read") {
+		if (mode === "read" || mode === "edit") {
 			loadWorldData(Number(id));
 			setSelectedIndex(1);
 		} else {

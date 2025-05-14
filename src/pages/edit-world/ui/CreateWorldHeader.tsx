@@ -15,12 +15,14 @@ function CreateWorldHeader({
 		sendWorldData,
 		setWorldImage,
 		worldId,
+		isOwner,
 	} = useEditorStore();
 
-	const publish = () => { };
+	const publish = () => {};
 	const download = () => {
 		// Получаем текущее состояние хранилища
-		const { worldId, worldTitle, worldImage, words, sentences } = useEditorStore.getState();
+		const { worldId, worldTitle, worldImage, words, sentences } =
+			useEditorStore.getState();
 
 		// Формируем JSON объект в нужном формате
 		const jsonData = {
@@ -32,18 +34,20 @@ function CreateWorldHeader({
 				id: Number(word.id) || index + 1,
 				word: word.word,
 				translation: word.translation,
-				world_id: worldId
+				world_id: worldId,
 			})),
 			sentences: sentences.map((sentence, index) => ({
 				id: Number(sentence.id) || index + 1,
 				sentence: sentence.sentence,
-				world_id: worldId
+				world_id: worldId,
 			})),
-			is_public: true
+			is_public: true,
 		};
 
 		// Создаем Blob с JSON данными
-		const blob = new Blob([JSON.stringify(jsonData, null, 2)], { type: "application/json" });
+		const blob = new Blob([JSON.stringify(jsonData, null, 2)], {
+			type: "application/json",
+		});
 
 		// Создаем URL для Blob
 		const url = URL.createObjectURL(blob);
@@ -67,10 +71,9 @@ function CreateWorldHeader({
 	const play = async () => {
 		try {
 			navigate(`/game/${worldId}`);
-		} catch (error) { }
+		} catch (error) {}
 	};
 
-	publish;
 	return (
 		<div className="flex gap-3 sm:gap-4 flex-col">
 			<div className="w-full flex flex-col sm:flex-row gap-3 sm:gap-4 sm:justify-between">
@@ -85,6 +88,7 @@ function CreateWorldHeader({
 				/>
 
 				<Input
+					disabled={editorType === "read"}
 					type="file"
 					onImageLoad={(base64) => setWorldImage(base64)}
 					className="w-full sm:w-80"

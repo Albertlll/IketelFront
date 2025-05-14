@@ -22,4 +22,5 @@ export interface WorldType {
 	description: string;
 	words: WordType[];
 	sentences: SentenceType[];
+	is_owner: boolean;
 }
