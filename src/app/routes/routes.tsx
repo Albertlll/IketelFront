@@ -1,12 +1,12 @@
 import { createBrowserRouter, redirect } from "react-router";
 
-import App from "./App";
-import { useUserStore } from "./entities/user/model/store";
-import Auth from "./pages/auth";
-import WorldsEditor from "./pages/edit-world";
-import { Game } from "./pages/game";
-import Library from "./pages/library";
-import Profile from "./pages/profile";
+import App from "../initial/App";
+import { useUserStore } from "../../entities/user/model/store";
+import Auth from "../../pages/auth";
+import WorldsEditor from "../../pages/edit-world";
+import { Game } from "../../pages/game";
+import Library from "../../pages/library";
+import Profile from "../../pages/profile";
 
 export const router = createBrowserRouter([
 	{

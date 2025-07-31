@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 import useToastStore, { Toast } from "../model/toastStore";
 
 const ToastItem: React.FC<{ toast: Toast; onRemove: () => void }> = ({

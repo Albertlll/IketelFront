@@ -1,4 +1,4 @@
-import { Button } from "@/shared/button";
+import { Button } from "@/shared/ui/button";
 import { AnimatePresence, motion } from "motion/react";
 import { useEditorStore } from "../model/world-editor-store";
 import AddNewSentenceRow from "./components/AddNewSentenceRow";

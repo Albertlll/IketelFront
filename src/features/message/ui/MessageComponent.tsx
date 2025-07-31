@@ -1,5 +1,5 @@
 import useMessageStore from "@/features/message/model/messageStore";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 import { motion } from "motion/react";
 import { useEffect } from "react";
 

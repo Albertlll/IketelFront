@@ -1,6 +1,6 @@
 import WorldCard from "@/entities/world";
 import type { WorldPreviewType } from "@/entities/world/types/types";
-import { Button } from "@/shared/button";
+import { Button } from "@/shared/ui/button";
 import { Link } from "react-router";
 
 function WorldsGrid({

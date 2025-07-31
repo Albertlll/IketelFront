@@ -1,5 +1,5 @@
 import type { LeaderboardParticipant } from "@/features/leaderboard/model/leaderboardStore";
-import socket, { connectSocket } from "@/sockets";
+import socket, { connectSocket } from "@/shared/api/sockets";
 import { create } from "zustand";
 import type { Adventure } from "../types/adventureTypes";
 

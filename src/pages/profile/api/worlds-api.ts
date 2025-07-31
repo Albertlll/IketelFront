@@ -1,5 +1,5 @@
 import type { WorldPreviewType } from "@/entities/world/types/types";
-import httpClient from "@/httpClient";
+import httpClient from "@/shared/api/httpClient";
 
 export const userWordsListRequest = async (): Promise<WorldPreviewType[]> => {
 	const response =

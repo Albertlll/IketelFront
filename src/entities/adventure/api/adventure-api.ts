@@ -1,4 +1,4 @@
-import httpClient from "@/httpClient";
+import httpClient from "@/shared/api/httpClient";
 
 export const startAdventure = async (worldId: number) => {
 	console.log(worldId);

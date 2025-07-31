@@ -1,5 +1,5 @@
 import { useUserStore } from "@/entities/user/model/store";
-import { useToast } from "@/shared/toast";
+import { useToast } from "@/shared/ui/toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { AxiosError } from "axios";
 import { useForm } from "react-hook-form";

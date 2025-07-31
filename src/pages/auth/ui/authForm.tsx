@@ -1,5 +1,5 @@
-import { Button } from "@/shared/button";
-import { Input } from "@/shared/input";
+import { Button } from "@/shared/ui/button";
+import { Input } from "@/shared/ui/input";
 import { useLoginForm } from "../hooks/authHooks";
 
 function LoginForm() {

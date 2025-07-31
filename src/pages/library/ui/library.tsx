@@ -1,6 +1,6 @@
 import type { WorldPreviewType } from "@/entities/world/types/types";
 import { wordsListRequest } from "@/pages/library/api/worlds-api";
-import Preloader from "@/shared/preloader/preloader";
+import Preloader from "@/shared/ui/preloader/preloader";
 import { useNavbarStore } from "@/widgets/navbar/model/navbarState";
 import WorldsGrid from "@/widgets/worlds-grid";
 import { useEffect, useState, useCallback } from "react";

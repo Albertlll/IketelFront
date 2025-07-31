@@ -1,4 +1,4 @@
-import httpClient from "@/httpClient";
+import httpClient from "@/shared/api/httpClient";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 

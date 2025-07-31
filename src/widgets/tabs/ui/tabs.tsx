@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 // import { useTabsModel } from "../model/tabs";
 import { AnimatePresence, motion } from "motion/react";
 import { type ReactNode, useState } from "react";

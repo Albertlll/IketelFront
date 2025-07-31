@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 import { Link } from "react-router";
 import { useUserStore } from "../model/store";
 import AvatarIcon from "./images/AvatarIcon.svg";

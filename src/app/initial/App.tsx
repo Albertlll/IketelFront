@@ -1,8 +1,15 @@
 import { Outlet } from "react-router";
-import Navbar from "./widgets/navbar";
-import { ToastContainer } from "./shared/toast";
+import Navbar from "../../widgets/navbar";
+import { ToastContainer } from "../../shared/ui/toast";
 
 function App() {
+
+	
+
+
+
+
+
 	return (
 		<div className=" flex flex-col">
 			<Navbar />

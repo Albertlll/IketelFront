@@ -1,5 +1,5 @@
 import { useToast } from "../hooks/hooks";
-import { Button } from "@/shared/button";
+import { Button } from "@/shared/ui/button";
 
 /**
  * Пример компонента, демонстрирующего использование тостов

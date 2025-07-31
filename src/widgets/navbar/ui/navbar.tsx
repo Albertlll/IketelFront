@@ -1,5 +1,5 @@
 import { Avatar } from "@/entities/user";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 import { Link } from "react-router";
 import { useNavbarStore } from "../model/navbarState";
 import IketelLogo from "./img/main-logo.svg";

@@ -1,4 +1,4 @@
-import { Input } from "@/shared/input";
+import { Input } from "@/shared/ui/input";
 import Tabs from "@/widgets/tabs";
 import { useNavigate } from "react-router";
 import { useEditorStore } from "../model/world-editor-store";

@@ -1,4 +1,4 @@
-import { ProgressBar } from "@/shared/progress-bar";
+import { ProgressBar } from "@/shared/ui/progress-bar";
 // import { steps } from "motion/react";
 
 interface ParticipantCardProps {

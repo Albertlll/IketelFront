@@ -1,5 +1,5 @@
 import type { WorldType } from "@/entities/world/types/types";
-import httpClient from "@/httpClient";
+import httpClient from "@/shared/api/httpClient";
 
 export const worldDataRequest = async (worldId: number): Promise<WorldType> => {
 	const response = await httpClient.get<WorldType>(`/worlds/${worldId}`);
