@@ -23,4 +23,5 @@ export interface WorldType {
 	words: WordType[];
 	sentences: SentenceType[];
 	is_owner: boolean;
+	is_public : boolean;
 }

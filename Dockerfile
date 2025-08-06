@@ -1,29 +1,10 @@
-# Используем официальный Node.js образ
-FROM node:23-alpine
-
-# Устанавливаем рабочую директорию
+FROM node:23-alpine as builder
 WORKDIR /app
-
-# Создаем директорию для SSL сертификатов
-RUN mkdir -p /app/ssl
-
-# Копируем package.json и устанавливаем зависимости
-COPY package*.json ./
+COPY package.json .
 RUN npm install
 
-# Копируем исходный код
 COPY . .
 
-# Копируем сертификаты (если передаются через секреты)
-
-RUN --mount=type=secret,id=ssl_key cat /run/secrets/ssl_key > /app/ssl/server-key.key
-RUN --mount=type=secret,id=ssl_cert cat /run/secrets/ssl_cert > /app/ssl/server-cert.crt
-RUN --mount=type=secret,id=ssl_ca cat /run/secrets/ssl_ca > /app/ssl/server-ca.crt
-
-# RUN npm run build
-# Явно указываем порт для Vite preview
-ENV PORT=3000
-EXPOSE 3000
-
-# Запуск Vite preview с правильными параметрами
-CMD ["npm", "run", "preview", "--", "--host", "0.0.0.0", "--port", "3000"]
+FROM alpine:latest
+WORKDIR /frontend
+COPY --from=builder /app/dist .

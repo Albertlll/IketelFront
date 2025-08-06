@@ -1,6 +1,7 @@
 import { cn } from "@/shared/lib/utils";
 import SwitchButton from "@/shared/ui/switch";
 import { DownloadIcon, PlayIcon, SaveIcon, ShareIcon } from "../img/Icons";
+import { useEditorStore } from "../../model/world-editor-store";
 // import SaveIcon from "../img/SaveIcon.svg";
 // import  from "../img/Do"
 function ControlBtns({
@@ -16,6 +17,11 @@ function ControlBtns({
   downloadHandler: () => void;
   mode: "read" | "create" | "edit";
 }) {
+
+
+  const { isPublic } = useEditorStore()
+
+
   return (
     <div className="flex flex-wrap gap-2 sm:gap-4">
       <button
@@ -42,15 +48,6 @@ function ControlBtns({
         <PlayIcon />
       </button>
 
-      <button
-        onClick={publishHandler}
-        type="button"
-        className="flex items-center gap-1 sm:gap-2 text-secondary hover:text-primary duration-200 transition-colors"
-        title="Опубликовать"
-      >
-        <div className="hidden sm:block">Опубликовать</div>
-        <ShareIcon />
-      </button>
 
       <button
         onClick={downloadHandler}
@@ -62,7 +59,20 @@ function ControlBtns({
         <DownloadIcon />
       </button>
 
-      <SwitchButton />
+
+      {mode !== "read"
+
+      &&
+      <div 
+ className="flex gap-1 items-center">
+        <div className="hidden sm:block text-secondary">Публичный</div>
+        <SwitchButton isChecked={isPublic}/>
+      </div>
+
+      
+
+      }
+
     </div>
   );
 }

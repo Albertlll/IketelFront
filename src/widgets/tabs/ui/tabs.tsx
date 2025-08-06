@@ -23,12 +23,14 @@ type TabsProps = TabsPropsBase &
 			isSwitchOnly?: false; // явно false
 			selectedIndex?: never; // запрещаем эти пропсы
 			onTabChange?: never;
+			animated: boolean;
 		}
 		| {
 			// Режим переключателя
 			isSwitchOnly: true;
 			selectedIndex: number;
 			onTabChange: (index: number) => void;
+			animated: boolean;
 		}
 	);
 
@@ -36,6 +38,7 @@ function Tabs({
 	elements,
 	isSwitchOnly = false,
 	selectedIndex = 0,
+	animated = false,
 	onTabChange,
 }: TabsProps) {
 	// const { selectedInd, setSelected } = useTabsModel();
@@ -70,18 +73,28 @@ function Tabs({
 					</div>
 				))}
 			</div>
+
 			{!isSwitchOnly && (
-				<AnimatePresence mode="wait">
-					<motion.div
-						initial={{ opacity: 0, y: 10 }}
-						animate={{ opacity: 1, y: 0 }}
-						exit={{ opacity: 0, y: -10 }}
-						transition={{ duration: 0.2 }}
-						key={`tab-content-${selectedInd}`}
-					>
+
+				animated ?
+					<AnimatePresence mode="wait">
+						<motion.div
+							initial={{ opacity: 0, y: 10 }}
+							animate={{ opacity: 1, y: 0 }}
+							exit={{ opacity: 0, y: -10 }}
+							transition={{ duration: 0.2 }}
+							key={`tab-content-${selectedInd}`}
+						>
+							{elements[selectedInd].element}
+						</motion.div>
+					</AnimatePresence>
+
+					:
+
+					<div>
 						{elements[selectedInd].element}
-					</motion.div>
-				</AnimatePresence>
+					</div>
+
 			)}
 		</>
 	);

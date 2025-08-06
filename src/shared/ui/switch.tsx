@@ -1,12 +1,15 @@
-function SwitchButton() {
-  return (
-    <label className="flex items-center cursor-pointer">
-      <input type="checkbox" className="sr-only peer" />
+import { useState } from "react";
+import { cn } from "../lib/utils";
 
-      <div className="relative flex items-center h-6 w-11 bg-gray-200 rounded-full transition-colors duration-300 peer-checked:bg-blue-500">
-        <span className="absolute left-1 h-4 w-4 bg-white rounded-full transition-transform duration-300 peer-checked:translate-x-5" />
-      </div>
-    </label>
+function SwitchButton(props : {isChecked : boolean}) {
+
+  const [isChecked, setIsChecked] = useState<boolean>(props.isChecked);
+
+  return (
+    // Надо будет доделать доступность
+    <button onClick={() => { setIsChecked(prev => !prev)}} className={ cn(" h-6 w-12 bg-secondary relative rounded-full border-4 border-secondary box-content duration-200 transition-colors", isChecked ? "  bg-primary border-primary" : "")}>
+      <div className={cn(" h-6 w-6 top-0 left-0 absolute bg-gray-200 rounded-full duration-200 transition-all right-auto", isChecked ? "left-6" : "")}/>
+    </button>
   );
 }
 

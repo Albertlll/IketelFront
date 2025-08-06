@@ -26,15 +26,16 @@ export const postWorldDataRequest = async (
 export const putWorldDataRequest = async (
 	worldId: number,
 	worldData: worldPostData,
-): Promise<WorldType> => {
-	const response = await httpClient.put<WorldType>(
+): Promise<string> => {
+	const response = await httpClient.put<string>(
 		`/worlds/${worldId}`,
 		worldData,
 	);
 	return response.data;
 };
 
-export const smartSaveWorld = async (
+
+export const saveWorld = async (
 	worldData: worldPostData,
 	isOwner: boolean,
 	worldId?: number,
@@ -51,11 +52,7 @@ export const smartSaveWorld = async (
 	return response.data;
 };
 
-/**
- * Удаляет мир по его ID
- * @param worldId ID мира для удаления
- * @returns Promise с результатом операции
- */
+
 export const deleteWorldRequest = async (worldId: number): Promise<void> => {
 	await httpClient.delete(`/worlds/${worldId}`);
 };

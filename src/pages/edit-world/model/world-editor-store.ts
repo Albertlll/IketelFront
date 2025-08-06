@@ -1,5 +1,5 @@
 import { worldDataRequest } from "@/entities/world";
-import { smartSaveWorld } from "@/entities/world/api/world-api";
+import { saveWorld } from "@/entities/world/api/world-api";
 import type { SentenceType, WordType } from "@/entities/world/types/types";
 import { create } from "zustand";
 
@@ -24,7 +24,9 @@ interface EditorStore {
 	setWorldId: (worldId: number) => void;
 
 	sendWorldData: () => void;
+	setIsPublic : (isPublic : boolean) => void;
 	isOwner: boolean;
+	isPublic : boolean;
 }
 
 export const useEditorStore = create<EditorStore>((set, get) => ({
@@ -35,6 +37,9 @@ export const useEditorStore = create<EditorStore>((set, get) => ({
 	worldImage: "",
 	worldId: 0,
 	isOwner: false,
+	isPublic: true,
+
+	setIsPublic : (isPublic : boolean) => set({isPublic}),
 
 	setWorldTitle: (worldTitle) => set({ worldTitle }),
 	setWorldImage: (worldImage) => set({ worldImage }),
@@ -114,6 +119,9 @@ export const useEditorStore = create<EditorStore>((set, get) => ({
 				worldTitle: data.title,
 				sentences: data.sentences,
 				isOwner: data.is_owner,
+				isPublic : data.is_public
+
+
 			});
 
 			if (data.is_owner) {
@@ -129,7 +137,7 @@ export const useEditorStore = create<EditorStore>((set, get) => ({
 
 		console.log(worldImage);
 
-		smartSaveWorld(
+		saveWorld(
 			{
 				title: worldTitle,
 				description: "",

@@ -4,7 +4,7 @@ import { ToastContainer } from "../../shared/ui/toast";
 
 function App() {
 
-	
+
 
 
 
@@ -14,7 +14,7 @@ function App() {
 		<div className=" flex flex-col">
 			<Navbar />
 
-			<div className=" px-4 sm:px-8 md:px-16 lg:px-40 w-full pt-10 md:pt-20 h-full">
+			<div className=" px-4 pb-8 sm:px-8 md:px-16 lg:px-40 w-full pt-10 md:pt-20 h-full">
 				<Outlet />
 			</div>
 
