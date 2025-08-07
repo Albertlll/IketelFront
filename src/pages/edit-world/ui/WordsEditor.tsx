@@ -1,5 +1,5 @@
 import { Button } from "@/shared/ui/button";
-import { AnimatePresence, motion, delay } from "motion/react";
+import { AnimatePresence, motion, delay, Variants, easeIn } from "motion/react";
 import { useEditorStore } from "../model/world-editor-store";
 import AddNewWordRow from "./components/AddNewWordRow";
 import { useEffect, useRef } from "react";
@@ -21,7 +21,7 @@ function WordsEditor() {
 
 
 
-	const itemVariants = {
+	const itemVariants: Variants = {
 		hidden: { opacity: 0, x: -100 },
 		visible: (data: { id: number, withDelay: boolean }) => ({
 			opacity: 1,
@@ -29,7 +29,8 @@ function WordsEditor() {
 			transition: {
 				delay: data.withDelay ? data.id * 0.1 : 0,
 				duration: 0.5,
-				ease: "easeOut"
+				ease: easeIn
+
 			}
 		}),
 		exit: {
