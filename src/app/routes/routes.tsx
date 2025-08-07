@@ -1,7 +1,6 @@
-import { createBrowserRouter, redirect } from "react-router";
+import { createBrowserRouter } from "react-router";
 
 import App from "../initial/App";
-import { useUserStore } from "../../entities/user/model/store";
 import Auth from "../../pages/auth";
 import WorldsEditor from "../../pages/edit-world";
 import { Game } from "../../pages/game";
@@ -26,26 +25,26 @@ export const router = createBrowserRouter([
 			{
 				path: "/worlds/new",
 				element:
-				<AuthGuard>
-				 <WorldsEditor mode="create" />,
-				</AuthGuard> 
+					<AuthGuard>
+						<WorldsEditor mode="create" />,
+					</AuthGuard>
 				// loader: () => {
-					// Проверяем авторизацию напрямую из хранилища
-					// const token = useUserStore.getState().token;
-					// if (!token) return redirect("/auth");
-					// return null;
+				// Проверяем авторизацию напрямую из хранилища
+				// const token = useUserStore.getState().token;
+				// if (!token) return redirect("/auth");
+				// return null;
 				// },
 			},
 			{
 				path: "/my-worlds",
 				element:
-				<AuthGuard>
-				<Profile />,
-				</AuthGuard>
+					<AuthGuard>
+						<Profile />,
+					</AuthGuard>
 			},
 			{
 				path: "/game/:worldId", // Добавляем параметр worldId
-				element: <AuthGuard><Game/></AuthGuard>,
+				element: <AuthGuard><Game /></AuthGuard>,
 				// loader: ({ params }) => {
 				// 	const token = useUserStore.getState().token;
 				// 	if (!token) return redirect("/auth");

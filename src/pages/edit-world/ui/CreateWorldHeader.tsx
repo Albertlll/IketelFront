@@ -17,7 +17,7 @@ function CreateWorldHeader({
 		worldId,
 	} = useEditorStore();
 
-	const publish = () => {};
+	const publish = () => { };
 	const download = () => {
 		// Получаем текущее состояние хранилища
 		const { worldId, worldTitle, worldImage, words, sentences } =
@@ -70,7 +70,7 @@ function CreateWorldHeader({
 	const play = async () => {
 		try {
 			navigate(`/game/${worldId}`);
-		} catch (error) {}
+		} catch (error) { }
 	};
 
 	return (
@@ -96,6 +96,7 @@ function CreateWorldHeader({
 
 			<div className="bg-white h-fit flex flex-col sm:flex-row gap-4 sm:gap-2 sm:justify-between rounded-[15px] sm:rounded-[20px] px-[10px] sm:px-[17px] py-[15px] sm:py-[23px]">
 				<Tabs
+					animated
 					isSwitchOnly={true}
 					elements={[{ title: "Слова" }, { title: "Предложения" }]}
 					selectedIndex={Number(!isWordsPage)}

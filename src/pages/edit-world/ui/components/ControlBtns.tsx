@@ -1,7 +1,8 @@
 import { cn } from "@/shared/lib/utils";
 import SwitchButton from "@/shared/ui/switch";
-import { DownloadIcon, PlayIcon, SaveIcon, ShareIcon } from "../img/Icons";
+import { DownloadIcon, PlayIcon, SaveIcon } from "../img/Icons";
 import { useEditorStore } from "../../model/world-editor-store";
+import { useEffect } from "react";
 // import SaveIcon from "../img/SaveIcon.svg";
 // import  from "../img/Do"
 function ControlBtns({
@@ -20,6 +21,11 @@ function ControlBtns({
 
 
   const { isPublic } = useEditorStore()
+
+
+  useEffect(() => {
+    publishHandler()
+  }, [isPublic])
 
 
   return (
@@ -62,14 +68,14 @@ function ControlBtns({
 
       {mode !== "read"
 
-      &&
-      <div 
- className="flex gap-1 items-center">
-        <div className="hidden sm:block text-secondary">Публичный</div>
-        <SwitchButton isChecked={isPublic}/>
-      </div>
+        &&
+        <div
+          className="flex gap-1 items-center">
+          <div className="hidden sm:block text-secondary">Публичный</div>
+          <SwitchButton isChecked={isPublic} />
+        </div>
 
-      
+
 
       }
 

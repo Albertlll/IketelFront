@@ -14,6 +14,7 @@ export function Auth() {
 		<div className="w-full h-full flex justify-center">
 			<div className="w-full sm:w-[90%] md:w-[80%] lg:w-[580px] flex flex-col gap-2 sm:gap-3 md:gap-4 p-3 sm:p-4 md:p-5">
 				<Tabs
+					animated
 					elements={[
 						{
 							element: <RegisterForm />,
