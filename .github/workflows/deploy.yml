@@ -31,14 +31,28 @@ jobs:
         run: |
           docker push cr.yandex/crph8la4elkq8clar20b/iketel-frontend:latest
 
-
-      - name: SSH into server and deploy
+      - name: Create SSH key file
         run: |
-          ssh -o StrictHostKeyChecking=no -i server_key.pem alan@${{ secrets.SERVER_IP }} "cd /home/alan && \
-            docker-compose pull && \
-            docker-compose down && \
-            docker-compose up -d && \
-            docker system prune -f"
+          echo "${{ secrets.SERVER_SSH_KEY }}" > server_key.pem
+          chmod 600 server_key.pem
+
+
+      - name: Check dist contents
+        run: | 
+          echo "Current dir: $(pwd)"
+          ls -la
+          ls -la dist || echo "dist does not exist"
+
+      - name: Copy to server
+        uses: appleboy/scp-action@v1
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          target: /var/www/frontend/
+          source: dist
+          
+        
 
 
 
