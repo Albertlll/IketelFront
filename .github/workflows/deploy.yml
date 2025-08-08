@@ -36,6 +36,13 @@ jobs:
           echo "${{ secrets.SERVER_SSH_KEY }}" > server_key.pem
           chmod 600 server_key.pem
 
+
+      - name: Check dist contents
+        run: | 
+          echo "Current dir: $(pwd)"
+          ls -la
+          ls -la dist || echo "dist does not exist"
+
       - name: Copy to server
         uses: appleboy/scp-action@v1
         with:
