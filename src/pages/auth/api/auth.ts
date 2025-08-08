@@ -4,13 +4,16 @@ import type {
 	LoginRequestDto,
 	RegisterRequestDto,
 } from "../schemas/dto";
+import { ResponseWrapper } from "@/shared/lib/responseWrapper";
 
 export const loginRequest = async (
 	data: LoginRequestDto,
 ): Promise<AuthResponseDto> => {
-	const response = await httpClient.post<AuthResponseDto>("/auth/login", data);
+	const response = await httpClient.post<ResponseWrapper<AuthResponseDto>>("/auth/login", data);
+	
+	console.log(response.data)
 
-	return response.data;
+	return response.data.data;
 };
 
 export const registerRequest = async (
