@@ -22,14 +22,14 @@ type TabsProps = TabsPropsBase &
 			// Режим с контентом (по умолчанию)
 			isSwitchOnly?: false; // явно false
 			selectedIndex?: never; // запрещаем эти пропсы
-			onTabChange?: never;
+			onTabChange?: () => void;
 			animated: boolean;
 		}
 		| {
 			// Режим переключателя
 			isSwitchOnly: true;
 			selectedIndex: number;
-			onTabChange: (index: number) => void;
+			onTabChange: (index?: number) => void;
 			animated: boolean;
 		}
 	);
@@ -50,6 +50,7 @@ function Tabs({
 		if (isSwitchOnly) {
 			onTabChange?.(index);
 		} else {
+			if (onTabChange) onTabChange();
 			setInternalSelected(index);
 		}
 	};

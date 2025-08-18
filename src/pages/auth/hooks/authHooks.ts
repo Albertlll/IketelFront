@@ -3,22 +3,26 @@ import { useToast } from "@/shared/ui/toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
-import { loginRequest, registerRequest } from "../api/auth";
-import type { LoginFormData } from "../schemas/formSchemas";
+import { loginRequest, registerRequest } from "../../../entities/user/api/auth";
+import type { LoginFormData } from "../../../entities/user/schemas/formSchemas";
 import {
 	type RegisterFormData,
 	loginSchema,
 	registerSchema,
-} from "../schemas/formSchemas";
+} from "../../../entities/user/schemas/formSchemas";
+
+
+
 export function useRegisterForm() {
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
+		reset
 	} = useForm<RegisterFormData>({
 		resolver: zodResolver(registerSchema),
 	});
-	
+
 	const { showSuccess, showError } = useToast();
 
 	const onSubmit = async (data: RegisterFormData) => {
@@ -44,7 +48,7 @@ export function useRegisterForm() {
 		}
 	};
 
-	return { register, handleSubmit, errors, onSubmit };
+	return { register, handleSubmit, errors, onSubmit, reset };
 }
 
 export function useLoginForm() {
@@ -52,6 +56,7 @@ export function useLoginForm() {
 		register,
 		handleSubmit,
 		setError,
+		reset,
 		formState: { errors },
 	} = useForm<LoginFormData>({
 		resolver: zodResolver(loginSchema),
@@ -94,5 +99,5 @@ export function useLoginForm() {
 		}
 	};
 
-	return { register, handleSubmit, errors, onSubmit };
+	return { register, handleSubmit, errors, onSubmit, reset};
 }

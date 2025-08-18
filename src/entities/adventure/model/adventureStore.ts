@@ -1,7 +1,9 @@
 import type { LeaderboardParticipant } from "@/features/leaderboard/model/leaderboardStore";
-import socket, { connectSocket } from "@/shared/api/sockets";
+import SocketService from "@/shared/api/sockets";
 import { create } from "zustand";
 import type { Adventure } from "../types/adventureTypes";
+
+const socket = SocketService.getInstance();
 
 type AdventureState = {
 	joinCode: string;
@@ -25,6 +27,7 @@ const useAdventureStore = create<AdventureState>((set) => ({
 	startGame: () => {
 		set({ isLoading: true });
 
+
 		socket.emit("game_start", {});
 
 		socket.on("leaderboard", (data: LeaderboardParticipant[]) => {
@@ -39,7 +42,7 @@ const useAdventureStore = create<AdventureState>((set) => ({
 		try {
 			set({ isLoading: true, error: null });
 
-			connectSocket();
+			socket.connect();
 
 			socket.emit("host_join", {
 				world_id: worldId,

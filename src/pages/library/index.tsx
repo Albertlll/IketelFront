@@ -1,3 +1,3 @@
-import Library from "./ui/library";
+import Library from "./ui/Library";
 
 export default Library;

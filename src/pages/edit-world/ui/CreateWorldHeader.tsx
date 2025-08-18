@@ -1,5 +1,5 @@
 import { Input } from "@/shared/ui/input";
-import Tabs from "@/widgets/tabs";
+import Tabs from "@/shared/ui/tabs";
 import { useNavigate } from "react-router";
 import { useEditorStore } from "../model/world-editor-store";
 import ControlBtns from "./components/ControlBtns";

@@ -2,7 +2,6 @@ import axios from "axios";
 import { useUserStore } from "../../entities/user/model/store";
 
 const httpConfig = axios.create({
-	// baseURL: "https://iketel.ru/api",
 	baseURL: "/api/",
 	withCredentials: true,
 	headers: {
