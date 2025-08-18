@@ -100,7 +100,7 @@ function CreateWorldHeader({
 					isSwitchOnly={true}
 					elements={[{ title: "Слова" }, { title: "Предложения" }]}
 					selectedIndex={Number(!isWordsPage)}
-					onTabChange={(index: number) => setIsWordsPage(!index)}
+					onTabChange={(index?: number) => setIsWordsPage(index !== undefined ? !index : false)}
 				/>
 
 				<div className="flex justify-center sm:justify-end">

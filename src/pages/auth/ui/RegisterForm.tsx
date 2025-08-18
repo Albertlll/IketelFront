@@ -1,6 +1,6 @@
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
-import { useRegisterForm } from "../hooks/authHooks";
+// import { useRegisterForm } from "../hooks/authHooks";
 import { UseFormHandleSubmit, UseFormRegister } from "react-hook-form";
 import { RegisterFormData } from "@/entities/user/schemas/formSchemas";
 
