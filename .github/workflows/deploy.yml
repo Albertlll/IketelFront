@@ -40,9 +40,9 @@ jobs:
       - name: SSH into server and deploy
         run: |
           ssh -o StrictHostKeyChecking=no -i server_key.pem root@${{ secrets.SERVER_IP }} "cd /home && \
-            docker-compose pull && \
-            docker-compose down && \
-            docker-compose up -d && \
+            docker compose pull && \
+            docker compose down && \
+            docker compose up -d && \
             docker system prune -f"
 
 
