@@ -79,7 +79,7 @@ const Game = () => {
 							<ParticipantsList participants={participants} />
 
 							<QRCode
-								value={joinCode}
+								value={"https://game.iketel.ru/enterRoom/" + joinCode}
 								className="p-[15px] sm:p-[25px] md:p-[35px] w-full h-full bg-white rounded-[15px] sm:rounded-[20px]"
 								size={200}
 							/>
