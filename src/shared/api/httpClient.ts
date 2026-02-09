@@ -2,7 +2,7 @@ import axios from "axios";
 import { useUserStore } from "../../entities/user/model/store";
 
 const httpConfig = axios.create({
-	baseURL: "/api/",
+	baseURL: import.meta.env.VITE_API_URL || "/gigi/",
 	withCredentials: true,
 	headers: {
 		"Content-Type": "application/json",

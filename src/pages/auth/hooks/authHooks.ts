@@ -3,6 +3,7 @@ import { useToast } from "@/shared/ui/toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
 import { loginRequest, registerRequest } from "../../../entities/user/api/auth";
 import type { LoginFormData } from "../../../entities/user/schemas/formSchemas";
 import {
@@ -64,6 +65,7 @@ export function useLoginForm() {
 
 	const { setUser } = useUserStore();
 	const { showSuccess, showError } = useToast();
+	const navigate = useNavigate();
 
 	const onSubmit = async (data: LoginFormData) => {
 		try {
@@ -80,6 +82,7 @@ export function useLoginForm() {
 
 			localStorage.setItem("token", tokenData.access_token);
 			showSuccess(`Добро пожаловать, ${tokenData.username}!`);
+			navigate("/");
 		} catch (error) {
 			const axiosError = error as AxiosError<{
 				message?: string;

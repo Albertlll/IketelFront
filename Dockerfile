@@ -1,9 +1,12 @@
 FROM node:23-alpine AS builder
+ARG VITE_API_URL
+ENV VITE_API_URL=$VITE_API_URL
 WORKDIR /app
-COPY package.json .
-RUN npm install
+COPY package.json package-lock.json ./
+RUN npm ci
 COPY . .
-RUN npm run build
+# Pass the environment variable to the build process
+RUN VITE_API_URL=$VITE_API_URL npm run build
 
 FROM nginx:alpine
 

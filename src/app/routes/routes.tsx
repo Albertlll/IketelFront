@@ -26,7 +26,7 @@ export const router = createBrowserRouter([
 				path: "/worlds/new",
 				element:
 					<AuthGuard>
-						<WorldsEditor mode="create" />,
+						<WorldsEditor mode="create" />
 					</AuthGuard>
 				// loader: () => {
 				// Проверяем авторизацию напрямую из хранилища
@@ -39,7 +39,7 @@ export const router = createBrowserRouter([
 				path: "/my-worlds",
 				element:
 					<AuthGuard>
-						<Profile />,
+						<Profile />
 					</AuthGuard>
 			},
 			{
