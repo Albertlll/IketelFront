@@ -89,6 +89,14 @@ class SocketService {
     this.socket?.on(event, callback);
   }
 
+  public off(event: string, callback?: EventCallback): void {
+    if (callback) {
+      this.socket?.off(event, callback);
+    } else {
+      this.socket?.off(event);
+    }
+  }
+
   public emit(event: string, data?: any): void {
     this.socket?.emit(event, data);
   }

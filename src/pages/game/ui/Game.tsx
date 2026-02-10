@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import QRCode from "react-qr-code";
 import { useParams } from "react-router";
 import GameHeader from "./GameHeader";
+import GameFinish from "./GameFinish";
 
 const Game = () => {
 	const {
@@ -19,6 +20,8 @@ const Game = () => {
 		isLoading,
 		error,
 		leaderboardData,
+		isFinished,
+		finishResults,
 	} = useAdventureStore();
 	// const { worldId } = useEditorStore();
 	const { worldId } = useParams();
@@ -65,6 +68,11 @@ const Game = () => {
 				</div>
 			) : isLoading ? (
 				<Preloader />
+			) : isFinished && finishResults ? (
+				<GameFinish
+					top3={finishResults.top3}
+					totalPlayers={finishResults.total_players}
+				/>
 			) : (
 				<div
 					className={cn(

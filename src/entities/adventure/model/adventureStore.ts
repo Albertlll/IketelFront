@@ -11,6 +11,11 @@ type AdventureState = {
 	isLoading: boolean;
 	error: string | null;
 	isStarted: boolean;
+	isFinished: boolean;
+	finishResults: {
+		top3: { place: number; username: string; score: number }[];
+		total_players: number;
+	} | null;
 	startGame: () => void;
 	loadAdventure: (worldId: number) => Promise<void>;
 	leaderboardData: LeaderboardParticipant[];
@@ -18,11 +23,13 @@ type AdventureState = {
 
 const useAdventureStore = create<AdventureState>((set) => ({
 	isStarted: false,
+	isFinished: false,
 	joinCode: "",
 	stepsCount: 0,
 	isLoading: false,
 	error: null,
 	leaderboardData: [],
+	finishResults: null,
 
 	startGame: () => {
 		set({ isLoading: true });
@@ -40,12 +47,16 @@ const useAdventureStore = create<AdventureState>((set) => ({
 
 	loadAdventure: async (worldId) => {
 		try {
-			set({ isLoading: true, error: null });
+			set({ isLoading: true, error: null, isFinished: false, finishResults: null });
 
 			socket.connect();
 
 			socket.emit("host_join", {
 				world_id: worldId,
+			});
+
+			socket.on("game_finished", (data: { top3: { place: number; username: string; score: number }[]; total_players: number }) => {
+				set({ isFinished: true, finishResults: data });
 			});
 
 			socket.on("host_ready", (response) => {
