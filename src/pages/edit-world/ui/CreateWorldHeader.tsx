@@ -3,6 +3,13 @@ import Tabs from "@/shared/ui/tabs";
 import { useNavigate } from "react-router";
 import { useEditorStore } from "../model/world-editor-store";
 import ControlBtns from "./components/ControlBtns";
+import {
+	StudyGenerationModal,
+	generateStudyGame,
+	type StudyGeneratePayload,
+} from "@/features/study-generation";
+import { useState } from "react";
+import { useToast } from "@/shared/ui/toast/hooks/hooks";
 
 function CreateWorldHeader({
 	isWordsPage,
@@ -15,15 +22,17 @@ function CreateWorldHeader({
 		sendWorldData,
 		setWorldImage,
 		worldId,
+		worldImage,
 	} = useEditorStore();
+
+	const [isStudyModalOpen, setIsStudyModalOpen] = useState(false);
+	const { showError } = useToast();
 
 	const publish = () => { };
 	const download = () => {
-		// Получаем текущее состояние хранилища
 		const { worldId, worldTitle, worldImage, words, sentences } =
 			useEditorStore.getState();
 
-		// Формируем JSON объект в нужном формате
 		const jsonData = {
 			id: worldId,
 			title: worldTitle,
@@ -43,25 +52,17 @@ function CreateWorldHeader({
 			is_public: true,
 		};
 
-		// Создаем Blob с JSON данными
 		const blob = new Blob([JSON.stringify(jsonData, null, 2)], {
 			type: "application/json",
 		});
 
-		// Создаем URL для Blob
 		const url = URL.createObjectURL(blob);
-
-		// Создаем временный элемент <a> для скачивания файла
 		const a = document.createElement("a");
 		a.href = url;
 		a.download = `${worldTitle || "world"}.json`;
-
-		// Добавляем элемент в DOM, имитируем клик и удаляем элемент
 		document.body.appendChild(a);
 		a.click();
 		document.body.removeChild(a);
-
-		// Освобождаем URL
 		URL.revokeObjectURL(url);
 	};
 
@@ -70,7 +71,42 @@ function CreateWorldHeader({
 	const play = async () => {
 		try {
 			navigate(`/game/${worldId}`);
-		} catch (error) { }
+		} catch {
+			// no-op
+		}
+	};
+
+	const openStudyModal = () => {
+		if (!worldId) {
+			showError("Сначала сохраните мирок, чтобы запускать изучение");
+			return;
+		}
+		setIsStudyModalOpen(true);
+	};
+
+	const handleStudyStart = async (payload: StudyGeneratePayload) => {
+		if (!worldId) {
+			showError("Не удалось определить мирок");
+			return;
+		}
+
+		try {
+			const generated = await generateStudyGame(worldId, payload);
+			setIsStudyModalOpen(false);
+			navigate(`/study/${worldId}`, {
+				state: {
+					game: generated.game,
+					worldImage,
+				},
+			});
+		} catch (error) {
+			const message =
+				error instanceof Error
+					? error.message
+					: "Не удалось сгенерировать игру";
+			showError(message);
+			throw error;
+		}
 	};
 
 	return (
@@ -100,7 +136,9 @@ function CreateWorldHeader({
 					isSwitchOnly={true}
 					elements={[{ title: "Слова" }, { title: "Предложения" }]}
 					selectedIndex={Number(!isWordsPage)}
-					onTabChange={(index?: number) => setIsWordsPage(index !== undefined ? !index : false)}
+					onTabChange={(index?: number) =>
+						setIsWordsPage(index !== undefined ? !index : false)
+					}
 				/>
 
 				<div className="flex justify-center sm:justify-end">
@@ -110,9 +148,17 @@ function CreateWorldHeader({
 						saveHandler={sendWorldData}
 						playHandler={play}
 						downloadHandler={download}
+						studyHandler={openStudyModal}
+						isStudyDisabled={editorType === "create" || !worldId}
 					/>
 				</div>
 			</div>
+
+			<StudyGenerationModal
+				open={isStudyModalOpen}
+				onClose={() => setIsStudyModalOpen(false)}
+				onStart={handleStudyStart}
+			/>
 		</div>
 	);
 }

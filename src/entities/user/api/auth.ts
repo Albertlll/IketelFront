@@ -21,9 +21,9 @@ export const registerRequest = async (
 ): Promise<AuthResponseDto> => {
 	console.log(data);
 
-	const response = await httpClient.post<AuthResponseDto>(
+	const response = await httpClient.post<ResponseWrapper<AuthResponseDto>>(
 		"/auth/register",
 		data,
 	);
-	return response.data;
+	return response.data.data;
 };

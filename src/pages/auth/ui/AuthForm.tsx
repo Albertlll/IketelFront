@@ -24,13 +24,27 @@ function LoginForm({ handleSubmit, onSubmit, register }: {
 
 
 
-			<form onSubmit={handleSubmit(onSubmit)} className=" flex gap-2 flex-col">
+			<form
+				onSubmit={handleSubmit(onSubmit)}
+				autoComplete="on"
+				className=" flex gap-2 flex-col"
+			>
 				<div className=" flex gap-2 flex-col p-[10px] bg-white rounded-[20px] box-content">
-					<Input type="email" placeholder="Почта" {...register("email")} />
+					<Input
+						type="email"
+						placeholder="Почта"
+						autoComplete="username"
+						{...register("email")}
+					/>
 					{/* {errors.email && (
 					<p className="text-red-500 text-sm">{errors.email.message}</p>
 				)} */}
-					<Input type="password" placeholder="Пароль" {...register("password")} />
+					<Input
+						type="password"
+						placeholder="Пароль"
+						autoComplete="current-password"
+						{...register("password")}
+					/>
 					{/* {errors.password && (
 					<p className="text-red-500 text-sm">{errors.password.message}</p>
 				)} */}

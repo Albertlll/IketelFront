@@ -24,16 +24,27 @@ export function useRegisterForm() {
 		resolver: zodResolver(registerSchema),
 	});
 
+	const { setUser } = useUserStore();
 	const { showSuccess, showError } = useToast();
+	const navigate = useNavigate();
 
 	const onSubmit = async (data: RegisterFormData) => {
 		try {
-			await registerRequest({
+			const tokenData = await registerRequest({
 				username: data.username,
 				password: data.password,
 				email: data.email,
 			});
-			showSuccess("Регистрация успешно завершена! Теперь вы можете войти в систему.");
+
+			setUser({
+				token: tokenData.access_token,
+				email: tokenData.email,
+				username: tokenData.username,
+			});
+
+			localStorage.setItem("token", tokenData.access_token);
+			showSuccess(`Добро пожаловать, ${tokenData.username}!`);
+			navigate("/");
 		} catch (error) {
 			console.error(error);
 			const axiosError = error as AxiosError<{

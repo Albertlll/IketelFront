@@ -7,6 +7,7 @@ import { Game } from "../../pages/game";
 import Library from "../../pages/library";
 import Profile from "../../pages/profile";
 import { AuthGuard } from "./guards";
+import { StudyGame } from "../../pages/study-game";
 
 export const router = createBrowserRouter([
 	{
@@ -20,41 +21,38 @@ export const router = createBrowserRouter([
 			{
 				path: "/worlds/:id",
 				element: <WorldsEditor mode="read" />,
-				// loader: ({ params }) => ({ id: params.id }),
 			},
 			{
 				path: "/worlds/new",
-				element:
+				element: (
 					<AuthGuard>
 						<WorldsEditor mode="create" />
 					</AuthGuard>
-				// loader: () => {
-				// Проверяем авторизацию напрямую из хранилища
-				// const token = useUserStore.getState().token;
-				// if (!token) return redirect("/auth");
-				// return null;
-				// },
+				),
 			},
 			{
 				path: "/my-worlds",
-				element:
+				element: (
 					<AuthGuard>
 						<Profile />
 					</AuthGuard>
+				),
 			},
 			{
-				path: "/game/:worldId", // Добавляем параметр worldId
-				element: <AuthGuard><Game /></AuthGuard>,
-				// loader: ({ params }) => {
-				// 	const token = useUserStore.getState().token;
-				// 	if (!token) return redirect("/auth");
-
-				// 	if (!params.worldId || Number.isNaN(Number(params.worldId))) {
-				// 		return redirect("/worlds");
-				// 	}
-
-				// 	return null;
-				// },
+				path: "/game/:worldId",
+				element: (
+					<AuthGuard>
+						<Game />
+					</AuthGuard>
+				),
+			},
+			{
+				path: "/study/:worldId",
+				element: (
+					<AuthGuard>
+						<StudyGame />
+					</AuthGuard>
+				),
 			},
 			{
 				index: true,

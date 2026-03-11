@@ -26,23 +26,42 @@ function RegisterForm({ handleSubmit, register, onSubmit }:
 ) {
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className=" flex gap-2 flex-col">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      autoComplete="on"
+      className=" flex gap-2 flex-col"
+    >
       <div className=" flex gap-2 flex-col p-[10px] bg-white rounded-[20px] box-content">
-        <Input placeholder="Имя" {...register("username")} />
+        <Input
+          placeholder="Имя"
+          autoComplete="name"
+          {...register("username")}
+        />
         {/* {errors.username && (
           <p className="text-red-500 text-sm">{errors.username.message}</p>
         )} */}
-        <Input type="email" placeholder="Почта" {...register("email")} />
+        <Input
+          type="email"
+          placeholder="Почта"
+          autoComplete="email"
+          {...register("email")}
+        />
         {/* {errors.email && (
           <p className="text-red-500 text-sm">{errors.email.message}</p>
         )} */}
-        <Input type="password" placeholder="Пароль" {...register("password")} />
+        <Input
+          type="password"
+          placeholder="Пароль"
+          autoComplete="new-password"
+          {...register("password")}
+        />
         {/* {errors.password && (
           <p className="text-red-500 text-sm">{errors.password.message}</p>
         )} */}
         <Input
           type="password"
           placeholder="Повторите пароль"
+          autoComplete="new-password"
           {...register("confirmPassword")}
         />
       </div>
